@@ -90,21 +90,109 @@ $$T = \frac{1}{N} \sum_{i=1}^{N} \frac{IDEC_{it}}{\overline{IDEC}_t} \ln \frac{I
 
 Se construyó una **Base Maestra Integrada** para el período 2013–2025, consolidando cinco fuentes oficiales de información pública con distintas periodicidades (mensual, trimestral y anual), homologadas a nivel comunal.
 
+---
+
+### Fuente 1 — Encuesta Nacional de Empleo (ENE) · INE
+
+| Atributo | Detalle |
+|---|---|
+| **Estado** | ✅ Levantada y procesada |
+| **Variable utilizada** | Empleo turístico *(proxy)* |
+| **Definición operacional** | Personas ocupadas en actividades asociadas al sector turístico (alojamiento y servicios de comidas) |
+| **Cobertura temporal** | 2013 – 2025 |
+| **Periodicidad** | Trimestre móvil |
+| **Uso en la tesis** | Dimensión Empleo Sectorial (IDEC) · Variable explicativa en modelos predictivos |
+| **Valor agregado** | Permite medir la capacidad de generación de empleo del clúster turístico regional |
+
+---
+
+### Fuente 2 — Encuesta Mensual de Alojamiento Turístico (EMAT) · INE
+
+| Atributo | Detalle |
+|---|---|
+| **Estado** | ⚠️ Parcialmente levantada |
+| **Variables identificadas** | Llegadas de pasajeros · Pernoctaciones · Tasa de ocupación · ADR · RevPAR |
+| **Cobertura temporal disponible** | 2017 – 2025 |
+| **Periodicidad original** | Mensual |
+| **Periodicidad homologada** | Trimestral |
+| **Uso en la tesis** | Dimensión Actividad Turística (IDEC) · Dimensión Generación de Ingresos (IDEC) |
+| **Valor agregado** | Permite medir demanda turística y rentabilidad de la actividad hotelera |
+
+---
+
+### Fuente 3 — Registro Nacional de Prestadores Turísticos · SERNATUR
+
+| Atributo | Detalle |
+|---|---|
+| **Estado** | ✅ Levantado y procesado |
+| **Cobertura obtenida** | 335 alojamientos registrados en La Araucanía |
+| **Variables utilizadas** | Número de alojamientos · Tipo de establecimiento · Distribución territorial |
+| **Periodicidad** | Corte anual |
+| **Uso en la tesis** | Dimensión Capacidad Productiva (IDEC) |
+| **Valor agregado** | Mide la oferta formal disponible del clúster turístico regional |
+
+---
+
+### Fuente 4 — Producto Interno Bruto Regional · Banco Central de Chile
+
+| Atributo | Detalle |
+|---|---|
+| **Estado** | ✅ Levantado y procesado |
+| **Variable utilizada** | PIB Regional de La Araucanía |
+| **Cobertura temporal** | 2013 – 2025 |
+| **Periodicidad** | Trimestral |
+| **Uso en la tesis** | Variable explicativa independiente |
+| **Valor agregado** | Permite controlar el contexto económico regional donde opera el clúster turístico |
+
+---
+
+### Fuente 5 — Inversión Pública Regional · Banco Integrado de Proyectos (BIP)
+
+| Atributo | Detalle |
+|---|---|
+| **Estado** | ✅ Levantado y procesado |
+| **Volumen procesado** | ≈ 1,46 GB |
+| **Variable utilizada** | `EBI_GASTO_VIGENTE` |
+| **Filtro aplicado** | Región de La Araucanía (`REG_CLAVE = 177`) |
+| **Cobertura temporal** | 2013 – 2025 |
+| **Periodicidad original** | Anual |
+| **Periodicidad homologada** | Trimestral |
+| **Uso en la tesis** | Variable explicativa independiente |
+| **Valor agregado** | Permite evaluar la influencia de la inversión pública sobre el desempeño económico del clúster |
+
+---
+
 ### Consolidado de Variables
 
-| Dimensión IDEC | Variable | Fuente | Periodicidad |
+| Dimensión IDEC | Variable | Fuente | Periodicidad homologada |
 |---|---|---|---|
-| Actividad turística | Llegadas | EMAT – INE | Mensual |
-| Actividad turística | Pernoctaciones | EMAT – INE | Mensual |
-| Actividad turística | Tasa de ocupación | EMAT – INE | Mensual |
-| Generación de ingresos | ADR *(Average Daily Rate)* | EMAT – INE | Mensual |
-| Generación de ingresos | RevPAR *(Revenue per Available Room)* | EMAT – INE | Mensual |
-| Empleo sectorial | Empleo turístico | ENE – INE | Trimestral |
+| Actividad turística | Llegadas | EMAT – INE | Trimestral |
+| Actividad turística | Pernoctaciones | EMAT – INE | Trimestral |
+| Actividad turística | Tasa de ocupación | EMAT – INE | Trimestral |
+| Generación de ingresos | ADR *(Average Daily Rate)* | EMAT – INE | Trimestral |
+| Generación de ingresos | RevPAR *(Revenue per Available Room)* | EMAT – INE | Trimestral |
+| Empleo sectorial | Empleo turístico *(proxy)* | ENE – INE | Trimestral |
 | Capacidad productiva | Alojamientos registrados | SERNATUR | Anual |
-| Contexto económico | PIB Regional | Banco Central | Anual |
-| Inversión pública | Gasto vigente BIP | BIP – MDS | Anual |
+| Contexto económico | PIB Regional | Banco Central | Trimestral |
+| Inversión pública | Gasto vigente BIP | BIP | Trimestral |
 
-### Logros Alcanzados en la Recopilación
+---
+
+### Estado de Avance de Datos
+
+| Componente | Avance |
+|---|---|
+| Levantamiento de fuentes | 100% |
+| Integración de bases | 90% |
+| Homologación temporal | 90% |
+| Construcción IDEC | 80% |
+| Análisis descriptivo | 70% |
+| Modelos Machine Learning | 0% |
+| Redacción Capítulo V | 30% |
+
+---
+
+### Principales Logros Alcanzados
 
 - Se identificaron y procesaron **cinco fuentes oficiales** de información pública.
 - Se construyó la **Base Maestra Integrada** para el período 2013–2025.
