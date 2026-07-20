@@ -1,0 +1,33 @@
+# Datos: viven fuera del repo (ver src/config.py / TESIS_BBDD_DIR)
+BBDD/raw/
+BBDD/processed/
+BBDD/final/
+*.csv
+*.xls
+*.xlsx
+*.rdata
+*.RData
+!BBDD/**/.gitkeep
+
+# Jupyter
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# R
+.Rhistory
+.RData
+
+# Sistema
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Salidas regenerables
+reports/figures/

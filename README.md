@@ -1,13 +1,13 @@
 # Modelación del Desempeño Económico del Clúster Turístico de la Región de La Araucanía mediante Técnicas de Machine Learning
 
-> **Investigación Doctoral** · Doctorado en Ciencias Económicas Empresariales  
+> **Investigación Doctoral** · Doctorado en Ciencias Económicas Empresariales
 > TECH Universidad Tecnológica · Santiago, 2026
 
 ---
 
 ## Resumen
 
-Esta investigación aplica técnicas de Machine Learning supervisado y no supervisado para modelar y evaluar el desempeño económico del clúster turístico de la Región de La Araucanía (Chile), utilizando exclusivamente datos públicos oficiales. El estudio introduce el **IDEC** (*Índice de Desempeño Económico del Clúster*), un indicador compuesto que integra actividad turística, empleo sectorial, generación de ingresos y capacidad productiva a nivel comunal. La hipótesis central postula que los modelos de ML logran una precisión predictiva superior a los enfoques econométricos tradicionales, generando evidencia accionable para la toma de decisiones territoriales.
+Esta investigación aplica técnicas de Machine Learning supervisado y no supervisado para modelar y evaluar el desempeño económico del clúster turístico de la Región de La Araucanía (Chile), utilizando exclusivamente datos públicos oficiales. El estudio introduce el **IDEC** (*Índice de Desempeño Económico del Clúster*), un indicador compuesto construido **a nivel comunal** a partir de registros administrativos observados. La hipótesis central postula que los modelos de ML logran una precisión predictiva superior a los enfoques econométricos tradicionales, generando evidencia accionable para la toma de decisiones territoriales.
 
 ---
 
@@ -20,9 +20,10 @@ Esta investigación aplica técnicas de Machine Learning supervisado y no superv
 | **Institución** | TECH Universidad Tecnológica |
 | **Programa** | Doctorado en Ciencias Económicas Empresariales |
 | **Área de estudio** | Región de La Araucanía, Chile |
-| **Unidad de análisis** | Comuna (datos panel: series temporales por comuna) |
-| **Período cubierto** | 2013 – 2025 |
-| **Fuentes de datos** | INE · SERNATUR · Banco Central · BIP · ENE |
+| **Unidad de análisis** | Comuna × año (panel) |
+| **Comunas del clúster** | 13 (núcleo de 8 + anillo de 5) |
+| **Período del panel** | 2013 – 2024 |
+| **Fuentes de datos** | SII · BIP · INE · SERNATUR · Banco Central |
 | **Paradigma** | Positivista · Cuantitativo · Explicativo-Predictivo |
 | **Entrega final** | 10 de diciembre de 2026 |
 
@@ -34,246 +35,155 @@ Esta investigación aplica técnicas de Machine Learning supervisado y no superv
 
 ---
 
-## Hipótesis
+## Definición del clúster
 
-| # | Hipótesis | Métricas de validación |
+La unidad de análisis es la **comuna**. El clúster turístico se define con un criterio externo y verificable: los **Destinos Turísticos oficiales que SERNATUR** reconoce en su Registro Nacional de Prestadores.
+
+| Grupo | Comunas | Criterio |
 |---|---|---|
-| **H1** | Las variables económicas y territoriales de fuentes públicas presentan una relación estadísticamente significativa, potencialmente no lineal, con el IDEC | Análisis de correlación · Pruebas de no linealidad |
-| **H2** | Los modelos de aprendizaje supervisado estiman el IDEC con niveles de error predictivo aceptables | MAE · RMSE · R² |
-| **H3** | Las técnicas no supervisadas identifican agrupamientos territoriales diferenciados dentro del clúster | Coeficiente de silueta · Índice de Davies-Bouldin |
+| **Núcleo** (8) | Pucón, Villarrica · Curacautín, Lonquimay, Melipeuco · Temuco, Nueva Imperial, Carahue | Destino SERNATUR |
+| **Anillo** (5) | Cunco, Victoria, Angol, Saavedra, Vilcún | Oferta formal ≥ 4 alojamientos (análisis de sensibilidad) |
+
+El núcleo concentra el 83 % de la oferta formal de alojamiento de la región.
 
 ---
 
-## Metodología
+## Arquitectura de datos
 
-### Fase 1 — Construcción del IDEC
+El principio rector es **no imputar lo que puede observarse**. Las dimensiones del IDEC se construyen sobre registros administrativos comunales observados, no sobre desagregaciones de series regionales.
 
-El IDEC integra cuatro dimensiones mediante normalización Min-Max y agregación de igual ponderación:
+### Fuentes integradas
 
-$$IDEC_{it} = \frac{1}{4}\left(D_{1it} + D_{2it} + D_{3it} + D_{4it}\right)$$
+| Fuente | Variable | Granularidad | Ventana | Estado |
+|---|---|---|---|---|
+| **SII** — Estadísticas de empresas por comuna y rubro | Ventas (UF), trabajadores, renta, nº empresas del rubro *I – Alojamiento y servicio de comidas* | **comuna × año** | 2005–2024 | ✅ Integrada |
+| **BIP** — Banco Integrado de Proyectos | Inversión pública ejecutada (`EBI_EJECUCION_PRESUPUESTARIA`) | **comuna × año** | 2013–2022* | ✅ Integrada |
+| **INE** — Proyecciones de población (base 2017) | Población total y en edad laboral | **comuna × año** | 2002–2035 | ✅ Integrada |
+| **SERNATUR** — Registro de alojamientos | Nº y clase de alojamientos | comuna (corte) | snapshot | ✅ Integrada |
+| **EMAT** — Encuesta Mensual de Alojamiento | Llegadas, pernoctaciones, ADR, RevPAR | región | 2017–2025 | ⚠️ Pendiente versión mensual |
 
-Donde cada dimensión $D_{k}$ agrega indicadores normalizados:
+\* El BIP reporta la ejecución con 2–3 años de rezago; se emplean versiones rezagadas (`lag2`) y de stock de capital, que cubren hasta 2024.
 
-$$D_{kit} = \frac{1}{m_k} \sum_{j=1}^{m_k} Z_{kjit}, \quad Z_{kjit} = \frac{X_{kjit} - \min(X_{kj})}{\max(X_{kj}) - \min(X_{kj})}$$
+### El riesgo evitado: el panel degenerado
 
-**Dimensiones:** Actividad turística · Empleo sectorial · Generación de ingresos · Capacidad productiva
+Desagregar una serie regional multiplicándola por un peso comunal fijo produce un panel de **rango 1** que no contiene información comunal nueva: el clustering sólo recupera el ranking de pesos y el índice de Theil queda constante. Toda variable pasa por un **diagnóstico de degeneración** antes de entrar a un modelo (`src/features/diagnostics.py`).
 
-> Se realizará análisis de sensibilidad comparando normalización Min-Max vs Z-score y esquemas alternativos de ponderación.
-
----
-
-### Fase 2 — Modelación Predictiva (Aprendizaje Supervisado)
-
-| Modelo | Rol |
-|---|---|
-| Regresión Lineal Múltiple | Modelo base comparativo |
-| Árboles de Decisión | Relaciones no lineales |
-| Random Forest | Interacciones complejas entre variables |
-
-**Validación:** K-fold cross-validation · Train/test split · MAE · RMSE · R²
+| Variable | Interacción comuna×tiempo | Veredicto |
+|---|---|---|
+| Inversión pública (BIP, observada) | 0,918 | ✅ OK |
+| Renta / trabajadores (SII, observadas) | 0,78 | ✅ OK |
+| *EMAT × peso fijo (contraejemplo)* | *0,000 — rango 1* | ❌ Degenerada |
 
 ---
 
-### Fase 3 — Agrupamiento Territorial (Aprendizaje No Supervisado)
+## El IDEC
 
-**Algoritmos:** K-Means · Clustering jerárquico (según pertinencia exploratoria)
+Índice compuesto que agrega indicadores normalizados en dimensiones, y las dimensiones en un índice único de igual ponderación:
 
-**Evaluación:** Coeficiente de silueta · Índice de Davies-Bouldin · Cohesión intra-clúster · Separación inter-clúster
+$$Z_{kjit} = \frac{\ln(1+X_{kjit}) - \min}{\max - \min}, \qquad D_{kit} = \frac{1}{m_k}\sum_{j} Z_{kjit}, \qquad IDEC_{it} = \frac{1}{K}\sum_k D_{kit}$$
 
-**Desigualdad territorial** medida con el Índice de Theil:
+Las variables se normalizan **per cápita** antes de agregar: en niveles, el índice ordenaría las comunas por tamaño demográfico en vez de por intensidad de desempeño.
 
-$$T = \frac{1}{N} \sum_{i=1}^{N} \frac{IDEC_{it}}{\overline{IDEC}_t} \ln \frac{IDEC_{it}}{\overline{IDEC}_t}$$
-
----
-
-## Base de Datos Integrada
-
-Se construyó una **Base Maestra Integrada** para el período 2013–2025, consolidando cinco fuentes oficiales de información pública con distintas periodicidades (mensual, trimestral y anual), homologadas a nivel comunal.
-
----
-
-### Fuente 1 — Encuesta Nacional de Empleo (ENE) · INE
-
-| Atributo | Detalle |
-|---|---|
-| **Estado** | ✅ Levantada y procesada |
-| **Variable utilizada** | Empleo turístico *(proxy)* |
-| **Definición operacional** | Personas ocupadas en actividades asociadas al sector turístico (alojamiento y servicios de comidas) |
-| **Cobertura temporal** | 2013 – 2025 |
-| **Periodicidad** | Trimestre móvil |
-| **Uso en la tesis** | Dimensión Empleo Sectorial (IDEC) · Variable explicativa en modelos predictivos |
-| **Valor agregado** | Permite medir la capacidad de generación de empleo del clúster turístico regional |
-
----
-
-### Fuente 2 — Encuesta Mensual de Alojamiento Turístico (EMAT) · INE
-
-| Atributo | Detalle |
-|---|---|
-| **Estado** | ⚠️ Parcialmente levantada |
-| **Variables identificadas** | Llegadas de pasajeros · Pernoctaciones · Tasa de ocupación · ADR · RevPAR |
-| **Cobertura temporal disponible** | 2017 – 2025 |
-| **Periodicidad original** | Mensual |
-| **Periodicidad homologada** | Trimestral |
-| **Uso en la tesis** | Dimensión Actividad Turística (IDEC) · Dimensión Generación de Ingresos (IDEC) |
-| **Valor agregado** | Permite medir demanda turística y rentabilidad de la actividad hotelera |
-
----
-
-### Fuente 3 — Registro Nacional de Prestadores Turísticos · SERNATUR
-
-| Atributo | Detalle |
-|---|---|
-| **Estado** | ✅ Levantado y procesado |
-| **Cobertura obtenida** | 335 alojamientos registrados en La Araucanía |
-| **Variables utilizadas** | Número de alojamientos · Tipo de establecimiento · Distribución territorial |
-| **Periodicidad** | Corte anual |
-| **Uso en la tesis** | Dimensión Capacidad Productiva (IDEC) |
-| **Valor agregado** | Mide la oferta formal disponible del clúster turístico regional |
-
----
-
-### Fuente 4 — Producto Interno Bruto Regional · Banco Central de Chile
-
-| Atributo | Detalle |
-|---|---|
-| **Estado** | ✅ Levantado y procesado |
-| **Variable utilizada** | PIB Regional de La Araucanía |
-| **Cobertura temporal** | 2013 – 2025 |
-| **Periodicidad** | Trimestral |
-| **Uso en la tesis** | Variable explicativa independiente |
-| **Valor agregado** | Permite controlar el contexto económico regional donde opera el clúster turístico |
-
----
-
-### Fuente 5 — Inversión Pública Regional · Banco Integrado de Proyectos (BIP)
-
-| Atributo | Detalle |
-|---|---|
-| **Estado** | ✅ Levantado y procesado |
-| **Volumen procesado** | ≈ 1,46 GB |
-| **Variable utilizada** | `EBI_GASTO_VIGENTE` |
-| **Filtro aplicado** | Región de La Araucanía (`REG_CLAVE = 177`) |
-| **Cobertura temporal** | 2013 – 2025 |
-| **Periodicidad original** | Anual |
-| **Periodicidad homologada** | Trimestral |
-| **Uso en la tesis** | Variable explicativa independiente |
-| **Valor agregado** | Permite evaluar la influencia de la inversión pública sobre el desempeño económico del clúster |
-
----
-
-### Consolidado de Variables
-
-| Dimensión IDEC | Variable | Fuente | Periodicidad homologada |
+| Dimensión | Indicadores | Fuente | Estado |
 |---|---|---|---|
-| Actividad turística | Llegadas | EMAT – INE | Trimestral |
-| Actividad turística | Pernoctaciones | EMAT – INE | Trimestral |
-| Actividad turística | Tasa de ocupación | EMAT – INE | Trimestral |
-| Generación de ingresos | ADR *(Average Daily Rate)* | EMAT – INE | Trimestral |
-| Generación de ingresos | RevPAR *(Revenue per Available Room)* | EMAT – INE | Trimestral |
-| Empleo sectorial | Empleo turístico *(proxy)* | ENE – INE | Trimestral |
-| Capacidad productiva | Alojamientos registrados | SERNATUR | Anual |
-| Contexto económico | PIB Regional | Banco Central | Trimestral |
-| Inversión pública | Gasto vigente BIP | BIP | Trimestral |
+| **D2 — Empleo sectorial** | trabajadores turísticos p.c. | SII | ✅ Observada |
+| **D3 — Generación de ingresos** | ventas p.c., renta p.c. | SII | ✅ Observada |
+| **D4 — Capacidad productiva** | alojamientos/1.000 hab., empresas p.c. | SERNATUR + SII | ✅ Observada |
+| **D1 — Actividad turística** | llegadas, pernoctaciones, ocupación | EMAT | ⏳ Pendiente (requiere EMAT comunal/mensual) |
+
+> El IDEC vigente integra **tres de las cuatro dimensiones**. D1 se incorporará al levantar EMAT. El índice es robusto al método de normalización (correlación de Spearman 0,92–1,00 entre Min-Max, Z-score, rank y Min-Max logarítmico).
 
 ---
 
-### Estado de Avance de Datos
+## Principales resultados
 
-| Componente | Avance |
+Los tres hallazgos se sostienen sobre el panel comunal observado 2013–2024 (156 observaciones, 13 comunas).
+
+### H1 — Relaciones no lineales
+Random Forest estima el IDEC con predictores **exógenos** al índice (inversión pública, sectores conexos, demografía). Las variables más relevantes por importancia de permutación son **construcción** e **inmobiliarias** — el rastro medible de la inversión turística privada. La inversión pública (BIP) no muestra señal predictiva detectable.
+
+### H2 — Precisión predictiva
+| Modelo | R² (validación temporal) |
 |---|---|
-| Levantamiento de fuentes | 100% |
-| Integración de bases | 90% |
-| Homologación temporal | 90% |
-| Construcción IDEC | 80% |
-| Análisis descriptivo | 70% |
-| Modelos Machine Learning | 0% |
-| Redacción Capítulo V | 30% |
+| **Random Forest** | **0,755** |
+| Árbol de decisión | 0,212 |
+| Ridge / Regresión lineal | < 0 |
+
+El ML supera netamente a los modelos lineales en **pronóstico temporal**. La generalización espacial (predecir una comuna no vista) es intrínsecamente limitada por el bajo número de unidades (13 comunas) y se declara como tal.
+
+### H3 — Desigualdad y agrupamientos territoriales
+- **Convergencia del clúster.** El índice de Theil del IDEC cae **53,5 %** entre 2013 y 2024 (σ-convergencia, *p* < 10⁻⁶), confirmada por β-convergencia (β = −0,033, *p* = 0,0002; velocidad ≈ 4 % anual). El motor es el alcance de los destinos de la **Araucanía Andina** (Curacautín +134 %, Melipeuco +111 %), no el deterioro de Pucón.
+- **Regímenes de desempeño.** El agrupamiento (selección de *k* por método del codo + silueta convergentes en *k* = 4) identifica cuatro regímenes estables (ARI de remuestreo 0,79), separando el **enclave turístico** (Pucón) del **centro urbano de servicios** (Temuco). Cuatro comunas transitan al alza; ninguna a la baja.
 
 ---
 
-### Principales Logros Alcanzados
-
-- Se identificaron y procesaron **cinco fuentes oficiales** de información pública.
-- Se construyó la **Base Maestra Integrada** para el período 2013–2025.
-- Se definió y operacionalizó el **IDEC** con sus cuatro dimensiones componentes.
-- Se homologaron fuentes con distintas periodicidades (mensual, trimestral y anual).
-- Se integró la **inversión pública regional** proveniente del Banco Integrado de Proyectos (BIP).
-- La base se encuentra en condiciones suficientes para iniciar el análisis estadístico y la aplicación de modelos de Machine Learning.
-
----
-
-## Hoja de Ruta
-
-```
-Construcción definitiva del IDEC → Análisis descriptivo → Correlaciones →
-Regresión múltiple → Random Forest → Clustering → Índice de Theil →
-Redacción de Capítulos V, VI y VII
-```
-
-| Trimestre | Etapa | Estado |
-|---|---|---|
-| Q1 2026 | Protocolo de investigación | ✅ Completo |
-| Q1–Q2 2026 | Capítulo I — El Problema | ✅ Completo |
-| Q2 2026 | Capítulo II — Marco Teórico | ✅ Completo |
-| Q2 2026 | Capítulo III — Marco Conceptual | ✅ Completo |
-| Q2 2026 | Capítulo IV — Metodología | ✅ Completo |
-| Q2–Q3 2026 | **Recopilación y preparación de datos** | 🔄 En progreso |
-| Q3 2026 | Capítulo V — Análisis de Resultados | ⏳ Pendiente |
-| Q4 2026 | Capítulo VI — Conclusiones | ⏳ Pendiente |
-
-> **Fecha de entrega final: 10 de diciembre de 2026**
-
----
-
-## Estructura del Repositorio
+## Estructura del repositorio
 
 ```
 .
-├── data/
-│   ├── raw/                  # Datasets públicos originales (sin modificar)
-│   │   ├── emat/             # Encuesta Mensual de Alojamiento Turístico (INE)
-│   │   ├── ene/              # Encuesta Nacional de Empleo (INE)
-│   │   ├── sernatur/         # Prestadores y alojamientos registrados
-│   │   ├── banco_central/    # PIB regional
-│   │   └── bip/              # Gasto vigente inversión pública
-│   ├── processed/            # Datasets limpios y normalizados
-│   └── final/                # Base Maestra Integrada lista para modelación
-├── notebooks/
-│   ├── 01_recopilacion_datos.ipynb
-│   ├── 02_construccion_idec.ipynb
-│   ├── 03_analisis_descriptivo.ipynb
-│   ├── 04_modelos_supervisados.ipynb
-│   ├── 05_clustering_territorial.ipynb
-│   └── 06_analisis_resultados.ipynb
+├── BBDD/
+│   ├── processed/            # paneles intermedios por fuente
+│   ├── final/                # panel Nivel A, IDEC y resultados H1–H3
+│   └── README.md             # estado y especificación de levantamiento de datos
 ├── src/
-│   ├── preprocessing/        # Limpieza y normalización
-│   ├── features/             # Ingeniería de variables
-│   ├── models/               # Entrenamiento y evaluación
-│   └── visualization/        # Gráficos y mapas territoriales
-├── reports/
-│   └── figures/              # Gráficos y tablas generados
+│   ├── config.py             # catálogo comunal, definición del clúster, rutas
+│   ├── build_panel.py        # ensamblado reproducible del panel Nivel A
+│   ├── data/                 # loaders: sii, bip, poblacion, sernatur
+│   ├── features/             # diagnostics, inversion, idec
+│   └── models/               # supervisado (H1–H2), clustering (H3)
+├── Notebooks/                # exploración y transformaciones
+├── Documentación/            # protocolo, capítulos, tesis
 ├── requirements.txt
 └── README.md
 ```
 
+Los datos crudos **no se versionan** (volumen y licencia). Viven en una carpeta externa apuntada por `src/config.py`; puede redefinirse con la variable de entorno `TESIS_BBDD_DIR`.
+
+### Reproducir el panel
+
+```bash
+pip install -r requirements.txt
+python -m src.build_panel        # genera BBDD/final/panel_nivelA_comunal.csv
+```
+
 ---
 
-## Stack Tecnológico
+## Estado de avance
 
-![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat&logo=python&logoColor=white)
-![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-F37626?style=flat&logo=jupyter&logoColor=white)
+| Componente | Avance |
+|---|---|
+| Levantamiento de fuentes comunales (SII, BIP, INE, SERNATUR) | 100 % |
+| Panel comunal integrado 2013–2024 | 100 % |
+| Diagnóstico de validez del panel | 100 % |
+| IDEC (3 de 4 dimensiones) | 85 % |
+| Dimensión D1 — actividad turística (EMAT) | 0 % *(pendiente levantamiento)* |
+| Modelos supervisados (H1, H2) | 100 % |
+| Clustering y desigualdad territorial (H3) | 100 % |
+| Redacción Capítulo III (Metodología) | Borrador |
+| Redacción Capítulo IV (Resultados) | Borrador |
+
+### Pendientes de datos
+
+Detallados en [`BBDD/README.md`](BBDD/README.md):
+1. **EMAT mensual/comunal** — habilita D1 y multiplica las observaciones temporales.
+2. **SERNATUR con fecha de inscripción** — convierte D4 en serie temporal.
+3. **Población comunal base Censo 2024** — el INE aún no la publica desagregada.
+
+---
+
+## Stack tecnológico
+
+![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat&logo=python&logoColor=white)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-F7931E?style=flat&logo=scikit-learn&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-2.x-150458?style=flat&logo=pandas&logoColor=white)
-![NumPy](https://img.shields.io/badge/NumPy-1.x-013243?style=flat&logo=numpy&logoColor=white)
 
-**Librerías principales:** `scikit-learn` · `pandas` · `numpy` · `matplotlib` · `seaborn` · `scipy` · `statsmodels`
+**Librerías principales:** `scikit-learn` · `pandas` · `numpy` · `scipy` · `statsmodels` · `pyxlsb` · `pyreadr`
 
 ---
 
-## Consideraciones Éticas
+## Consideraciones éticas
 
-Este estudio utiliza **exclusivamente datos públicos** sin información personal sensible, cumpliendo los principios éticos de la investigación científica y los estándares de datos abiertos del gobierno de Chile. La total reproducibilidad está garantizada mediante código documentado y fuentes de acceso público.
+Este estudio utiliza **exclusivamente datos públicos** sin información personal sensible. Las cifras del SII respetan la reserva tributaria (Art. 35 del Código Tributario): los valores construidos con ≤10 informantes se publican enmascarados y se tratan como faltantes estructurales. La reproducibilidad está garantizada mediante código documentado y fuentes de acceso público.
 
 ---
 
@@ -291,19 +201,6 @@ Este estudio utiliza **exclusivamente datos públicos** sin información persona
   address   = {Santiago, Chile}
 }
 ```
-
----
-
-## Referencias Seleccionadas
-
-- Breiman, L. (2001). Random forests. *Machine Learning, 45*(1), 5–32.
-- Hastie, T., Tibshirani, R., & Friedman, J. (2009). *The Elements of Statistical Learning* (2.ª ed.). Springer.
-- INE. (2023). *Estadísticas regionales*. Instituto Nacional de Estadísticas.
-- Ministerio de Economía. (2022). *Cuenta Satélite de Turismo de Chile*.
-- OECD. (2020). *Machine Learning and Artificial Intelligence in Public Policy*.
-- Porter, M. E. (1998). Clusters and the new economics of competition. *Harvard Business Review, 76*(6), 77–90.
-- Russell, S. J., & Norvig, P. (2021). *Artificial Intelligence: A Modern Approach* (4.ª ed.). Pearson.
-- Varian, H. R. (2019). Artificial intelligence, economics, and industrial organization. En Agrawal, Gans & Goldfarb (Eds.), *The Economics of Artificial Intelligence*. University of Chicago Press.
 
 ---
 
