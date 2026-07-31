@@ -1,0 +1,157 @@
+comuna,comuna_nombre,destino_sernatur,anio,poblacion,poblacion_laboral
+9101,Temuco,Temuco y Lago Budi,2013,286138,200886
+9101,Temuco,Temuco y Lago Budi,2014,288521,202738
+9101,Temuco,Temuco y Lago Budi,2015,291032,204354
+9101,Temuco,Temuco y Lago Budi,2016,293431,205713
+9101,Temuco,Temuco y Lago Budi,2017,295839,207045
+9101,Temuco,Temuco y Lago Budi,2018,298239,208318
+9101,Temuco,Temuco y Lago Budi,2019,300618,209550
+9101,Temuco,Temuco y Lago Budi,2020,302931,210571
+9101,Temuco,Temuco y Lago Budi,2021,304871,211157
+9101,Temuco,Temuco y Lago Budi,2022,306579,211574
+9101,Temuco,Temuco y Lago Budi,2023,308175,211948
+9101,Temuco,Temuco y Lago Budi,2024,309696,212401
+9102,Carahue,Temuco y Lago Budi,2013,25322,16234
+9102,Carahue,Temuco y Lago Budi,2014,25314,16250
+9102,Carahue,Temuco y Lago Budi,2015,25328,16246
+9102,Carahue,Temuco y Lago Budi,2016,25342,16223
+9102,Carahue,Temuco y Lago Budi,2017,25369,16212
+9102,Carahue,Temuco y Lago Budi,2018,25403,16185
+9102,Carahue,Temuco y Lago Budi,2019,25444,16160
+9102,Carahue,Temuco y Lago Budi,2020,25486,16131
+9102,Carahue,Temuco y Lago Budi,2021,25505,16076
+9102,Carahue,Temuco y Lago Budi,2022,25511,16006
+9102,Carahue,Temuco y Lago Budi,2023,25514,15931
+9102,Carahue,Temuco y Lago Budi,2024,25515,15880
+9103,Cunco,,2013,18012,11432
+9103,Cunco,,2014,17988,11428
+9103,Cunco,,2015,17984,11430
+9103,Cunco,,2016,17983,11411
+9103,Cunco,,2017,17992,11405
+9103,Cunco,,2018,18008,11366
+9103,Cunco,,2019,18030,11341
+9103,Cunco,,2020,18055,11309
+9103,Cunco,,2021,18065,11243
+9103,Cunco,,2022,18067,11184
+9103,Cunco,,2023,18067,11123
+9103,Cunco,,2024,18068,11070
+9110,Melipeuco,Araucanía Andina,2013,6078,3823
+9110,Melipeuco,Araucanía Andina,2014,6103,3844
+9110,Melipeuco,Araucanía Andina,2015,6131,3863
+9110,Melipeuco,Araucanía Andina,2016,6158,3872
+9110,Melipeuco,Araucanía Andina,2017,6185,3885
+9110,Melipeuco,Araucanía Andina,2018,6212,3882
+9110,Melipeuco,Araucanía Andina,2019,6239,3882
+9110,Melipeuco,Araucanía Andina,2020,6265,3885
+9110,Melipeuco,Araucanía Andina,2021,6283,3870
+9110,Melipeuco,Araucanía Andina,2022,6297,3855
+9110,Melipeuco,Araucanía Andina,2023,6309,3844
+9110,Melipeuco,Araucanía Andina,2024,6319,3830
+9111,Nueva Imperial,Temuco y Lago Budi,2013,32587,21160
+9111,Nueva Imperial,Temuco y Lago Budi,2014,32752,21279
+9111,Nueva Imperial,Temuco y Lago Budi,2015,32933,21366
+9111,Nueva Imperial,Temuco y Lago Budi,2016,33102,21424
+9111,Nueva Imperial,Temuco y Lago Budi,2017,33273,21475
+9111,Nueva Imperial,Temuco y Lago Budi,2018,33445,21525
+9111,Nueva Imperial,Temuco y Lago Budi,2019,33614,21571
+9111,Nueva Imperial,Temuco y Lago Budi,2020,33777,21596
+9111,Nueva Imperial,Temuco y Lago Budi,2021,33898,21573
+9111,Nueva Imperial,Temuco y Lago Budi,2022,33993,21536
+9111,Nueva Imperial,Temuco y Lago Budi,2023,34077,21490
+9111,Nueva Imperial,Temuco y Lago Budi,2024,34151,21461
+9115,Pucón,Pucón y Villarrica,2013,27310,18457
+9115,Pucón,Pucón y Villarrica,2014,27695,18780
+9115,Pucón,Pucón y Villarrica,2015,28080,19066
+9115,Pucón,Pucón y Villarrica,2016,28443,19330
+9115,Pucón,Pucón y Villarrica,2017,28796,19578
+9115,Pucón,Pucón y Villarrica,2018,29138,19781
+9115,Pucón,Pucón y Villarrica,2019,29469,19977
+9115,Pucón,Pucón y Villarrica,2020,29782,20143
+9115,Pucón,Pucón y Villarrica,2021,30052,20265
+9115,Pucón,Pucón y Villarrica,2022,30290,20367
+9115,Pucón,Pucón y Villarrica,2023,30508,20447
+9115,Pucón,Pucón y Villarrica,2024,30712,20539
+9116,Saavedra,,2013,13043,8141
+9116,Saavedra,,2014,12983,8121
+9116,Saavedra,,2015,12939,8093
+9116,Saavedra,,2016,12897,8055
+9116,Saavedra,,2017,12863,8023
+9116,Saavedra,,2018,12835,7981
+9116,Saavedra,,2019,12812,7943
+9116,Saavedra,,2020,12793,7903
+9116,Saavedra,,2021,12764,7841
+9116,Saavedra,,2022,12727,7785
+9116,Saavedra,,2023,12693,7727
+9116,Saavedra,,2024,12660,7679
+9119,Vilcún,,2013,27462,18212
+9119,Vilcún,,2014,27886,18535
+9119,Vilcún,,2015,28338,18845
+9119,Vilcún,,2016,28793,19139
+9119,Vilcún,,2017,29265,19441
+9119,Vilcún,,2018,29752,19728
+9119,Vilcún,,2019,30253,20016
+9119,Vilcún,,2020,30766,20301
+9119,Vilcún,,2021,31258,20553
+9119,Vilcún,,2022,31745,20799
+9119,Vilcún,,2023,32238,21054
+9119,Vilcún,,2024,32742,21336
+9120,Villarrica,Pucón y Villarrica,2013,55141,36735
+9120,Villarrica,Pucón y Villarrica,2014,55723,37217
+9120,Villarrica,Pucón y Villarrica,2015,56326,37640
+9120,Villarrica,Pucón y Villarrica,2016,56898,38013
+9120,Villarrica,Pucón y Villarrica,2017,57466,38368
+9120,Villarrica,Pucón y Villarrica,2018,58025,38670
+9120,Villarrica,Pucón y Villarrica,2019,58574,38958
+9120,Villarrica,Pucón y Villarrica,2020,59103,39196
+9120,Villarrica,Pucón y Villarrica,2021,59554,39359
+9120,Villarrica,Pucón y Villarrica,2022,59955,39486
+9120,Villarrica,Pucón y Villarrica,2023,60327,39598
+9120,Villarrica,Pucón y Villarrica,2024,60675,39731
+9201,Angol,,2013,53892,35714
+9201,Angol,,2014,54192,35960
+9201,Angol,,2015,54520,36164
+9201,Angol,,2016,54827,36310
+9201,Angol,,2017,55140,36460
+9201,Angol,,2018,55451,36587
+9201,Angol,,2019,55761,36718
+9201,Angol,,2020,56058,36811
+9201,Angol,,2021,56289,36834
+9201,Angol,,2022,56476,36819
+9201,Angol,,2023,56644,36805
+9201,Angol,,2024,56797,36796
+9203,Curacautín,Araucanía Andina,2013,17898,11545
+9203,Curacautín,Araucanía Andina,2014,17930,11570
+9203,Curacautín,Araucanía Andina,2015,17974,11581
+9203,Curacautín,Araucanía Andina,2016,18013,11578
+9203,Curacautín,Araucanía Andina,2017,18054,11568
+9203,Curacautín,Araucanía Andina,2018,18094,11555
+9203,Curacautín,Araucanía Andina,2019,18137,11548
+9203,Curacautín,Araucanía Andina,2020,18178,11525
+9203,Curacautín,Araucanía Andina,2021,18196,11480
+9203,Curacautín,Araucanía Andina,2022,18207,11428
+9203,Curacautín,Araucanía Andina,2023,18210,11379
+9203,Curacautín,Araucanía Andina,2024,18211,11332
+9205,Lonquimay,Araucanía Andina,2013,10794,7032
+9205,Lonquimay,Araucanía Andina,2014,10828,7074
+9205,Lonquimay,Araucanía Andina,2015,10863,7119
+9205,Lonquimay,Araucanía Andina,2016,10901,7150
+9205,Lonquimay,Araucanía Andina,2017,10939,7173
+9205,Lonquimay,Araucanía Andina,2018,10975,7192
+9205,Lonquimay,Araucanía Andina,2019,11014,7197
+9205,Lonquimay,Araucanía Andina,2020,11049,7196
+9205,Lonquimay,Araucanía Andina,2021,11071,7187
+9205,Lonquimay,Araucanía Andina,2022,11088,7165
+9205,Lonquimay,Araucanía Andina,2023,11101,7150
+9205,Lonquimay,Araucanía Andina,2024,11109,7135
+9211,Victoria,,2013,34957,23247
+9211,Victoria,,2014,34997,23313
+9211,Victoria,,2015,35086,23374
+9211,Victoria,,2016,35151,23390
+9211,Victoria,,2017,35219,23408
+9211,Victoria,,2018,35305,23409
+9211,Victoria,,2019,35393,23401
+9211,Victoria,,2020,35467,23374
+9211,Victoria,,2021,35512,23302
+9211,Victoria,,2022,35531,23206
+9211,Victoria,,2023,35541,23117
+9211,Victoria,,2024,35554,23038

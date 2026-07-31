@@ -1,13 +1,24 @@
-# Datos: viven fuera del repo (ver src/config.py / TESIS_BBDD_DIR)
+# =====================================================================
+# Datos crudos: viven FUERA del repo (ver src/config.py / TESIS_BBDD_DIR).
+# Si se copian dentro, van a BBDD/raw/ y no se versionan.
+# =====================================================================
 BBDD/raw/
-BBDD/processed/
-BBDD/final/
+
+# Formatos de datos crudos, en cualquier ubicación (evita subir fuentes pesadas)
 *.csv
 *.xls
 *.xlsx
+*.xlsb
 *.rdata
 *.RData
-!BBDD/**/.gitkeep
+
+# ---------------------------------------------------------------------
+# EXCEPCIÓN: los resultados de la investigación SÍ se versionan.
+# Son livianos (~1,8 MB) y constituyen el producto reproducible del estudio:
+# paneles integrados y resultados de las tres hipótesis.
+# ---------------------------------------------------------------------
+!BBDD/final/*.csv
+!BBDD/processed/*.csv
 
 # Jupyter
 .ipynb_checkpoints/
@@ -22,7 +33,6 @@ venv/
 
 # R
 .Rhistory
-.RData
 
 # Sistema
 Thumbs.db

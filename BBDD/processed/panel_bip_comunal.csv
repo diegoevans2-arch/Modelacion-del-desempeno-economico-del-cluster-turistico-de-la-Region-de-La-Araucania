@@ -1,0 +1,170 @@
+comuna,comuna_nombre,destino_sernatur,anio,inversion_publica,n_proyectos,cobertura_fuente
+9101,Temuco,Temuco y Lago Budi,2013,14377599.0,67.0,True
+9101,Temuco,Temuco y Lago Budi,2014,17053007.0,69.0,True
+9101,Temuco,Temuco y Lago Budi,2015,34696073.0,71.0,True
+9101,Temuco,Temuco y Lago Budi,2016,54574507.0,69.0,True
+9101,Temuco,Temuco y Lago Budi,2017,104902625.0,70.0,True
+9101,Temuco,Temuco y Lago Budi,2018,115570622.0,80.0,True
+9101,Temuco,Temuco y Lago Budi,2019,181707376.0,69.0,True
+9101,Temuco,Temuco y Lago Budi,2020,114767309.0,70.0,True
+9101,Temuco,Temuco y Lago Budi,2021,94182468.0,73.0,True
+9101,Temuco,Temuco y Lago Budi,2022,50327554.0,71.0,True
+9101,Temuco,Temuco y Lago Budi,2023,,,False
+9101,Temuco,Temuco y Lago Budi,2024,,,False
+9101,Temuco,Temuco y Lago Budi,2025,,,False
+9102,Carahue,Temuco y Lago Budi,2013,3979145.0,17.0,True
+9102,Carahue,Temuco y Lago Budi,2014,1085685.0,28.0,True
+9102,Carahue,Temuco y Lago Budi,2015,29249994.0,31.0,True
+9102,Carahue,Temuco y Lago Budi,2016,49307622.0,44.0,True
+9102,Carahue,Temuco y Lago Budi,2017,79124142.0,23.0,True
+9102,Carahue,Temuco y Lago Budi,2018,45268039.0,38.0,True
+9102,Carahue,Temuco y Lago Budi,2019,8612246.0,41.0,True
+9102,Carahue,Temuco y Lago Budi,2020,10734854.0,35.0,True
+9102,Carahue,Temuco y Lago Budi,2021,26433267.0,33.0,True
+9102,Carahue,Temuco y Lago Budi,2022,9007275.0,32.0,True
+9102,Carahue,Temuco y Lago Budi,2023,,,False
+9102,Carahue,Temuco y Lago Budi,2024,,,False
+9102,Carahue,Temuco y Lago Budi,2025,,,False
+9103,Cunco,,2013,43604.0,14.0,True
+9103,Cunco,,2014,9152330.0,14.0,True
+9103,Cunco,,2015,48891803.0,21.0,True
+9103,Cunco,,2016,40436045.0,22.0,True
+9103,Cunco,,2017,46052981.0,19.0,True
+9103,Cunco,,2018,18596223.0,26.0,True
+9103,Cunco,,2019,2598835.0,23.0,True
+9103,Cunco,,2020,6626531.0,18.0,True
+9103,Cunco,,2021,6347376.0,15.0,True
+9103,Cunco,,2022,7781928.0,8.0,True
+9103,Cunco,,2023,,,False
+9103,Cunco,,2024,,,False
+9103,Cunco,,2025,,,False
+9110,Melipeuco,Araucanía Andina,2013,1549262.0,8.0,True
+9110,Melipeuco,Araucanía Andina,2014,1690060.0,4.0,True
+9110,Melipeuco,Araucanía Andina,2015,10700.0,11.0,True
+9110,Melipeuco,Araucanía Andina,2016,0.0,16.0,True
+9110,Melipeuco,Araucanía Andina,2017,2116475.0,14.0,True
+9110,Melipeuco,Araucanía Andina,2018,2239115.0,12.0,True
+9110,Melipeuco,Araucanía Andina,2019,212084.0,19.0,True
+9110,Melipeuco,Araucanía Andina,2020,733220.0,15.0,True
+9110,Melipeuco,Araucanía Andina,2021,169386.0,20.0,True
+9110,Melipeuco,Araucanía Andina,2022,0.0,18.0,True
+9110,Melipeuco,Araucanía Andina,2023,,,False
+9110,Melipeuco,Araucanía Andina,2024,,,False
+9110,Melipeuco,Araucanía Andina,2025,,,False
+9111,Nueva Imperial,Temuco y Lago Budi,2013,2856827.0,20.0,True
+9111,Nueva Imperial,Temuco y Lago Budi,2014,7223916.0,27.0,True
+9111,Nueva Imperial,Temuco y Lago Budi,2015,14377342.0,33.0,True
+9111,Nueva Imperial,Temuco y Lago Budi,2016,9189326.0,31.0,True
+9111,Nueva Imperial,Temuco y Lago Budi,2017,3125599.0,31.0,True
+9111,Nueva Imperial,Temuco y Lago Budi,2018,6365746.0,34.0,True
+9111,Nueva Imperial,Temuco y Lago Budi,2019,11473060.0,35.0,True
+9111,Nueva Imperial,Temuco y Lago Budi,2020,7196606.0,29.0,True
+9111,Nueva Imperial,Temuco y Lago Budi,2021,14299230.0,32.0,True
+9111,Nueva Imperial,Temuco y Lago Budi,2022,8642706.0,28.0,True
+9111,Nueva Imperial,Temuco y Lago Budi,2023,,,False
+9111,Nueva Imperial,Temuco y Lago Budi,2024,,,False
+9111,Nueva Imperial,Temuco y Lago Budi,2025,,,False
+9115,Pucón,Pucón y Villarrica,2013,5615092.0,20.0,True
+9115,Pucón,Pucón y Villarrica,2014,3524247.0,25.0,True
+9115,Pucón,Pucón y Villarrica,2015,11994576.0,26.0,True
+9115,Pucón,Pucón y Villarrica,2016,16456466.0,31.0,True
+9115,Pucón,Pucón y Villarrica,2017,8195806.0,18.0,True
+9115,Pucón,Pucón y Villarrica,2018,3407654.0,24.0,True
+9115,Pucón,Pucón y Villarrica,2019,13272614.0,26.0,True
+9115,Pucón,Pucón y Villarrica,2020,11044761.0,22.0,True
+9115,Pucón,Pucón y Villarrica,2021,752388.0,14.0,True
+9115,Pucón,Pucón y Villarrica,2022,1411269.0,16.0,True
+9115,Pucón,Pucón y Villarrica,2023,,,False
+9115,Pucón,Pucón y Villarrica,2024,,,False
+9115,Pucón,Pucón y Villarrica,2025,,,False
+9116,Saavedra,,2013,58412199.0,30.0,True
+9116,Saavedra,,2014,12731327.0,40.0,True
+9116,Saavedra,,2015,2416416.0,33.0,True
+9116,Saavedra,,2016,12158595.0,42.0,True
+9116,Saavedra,,2017,15507006.0,41.0,True
+9116,Saavedra,,2018,12150903.0,43.0,True
+9116,Saavedra,,2019,5447279.0,39.0,True
+9116,Saavedra,,2020,7101376.0,46.0,True
+9116,Saavedra,,2021,7206997.0,39.0,True
+9116,Saavedra,,2022,8809302.0,29.0,True
+9116,Saavedra,,2023,,,False
+9116,Saavedra,,2024,,,False
+9116,Saavedra,,2025,,,False
+9119,Vilcún,,2013,447797.0,32.0,True
+9119,Vilcún,,2014,1305009.0,33.0,True
+9119,Vilcún,,2015,6443793.0,22.0,True
+9119,Vilcún,,2016,17227560.0,29.0,True
+9119,Vilcún,,2017,2315094.0,24.0,True
+9119,Vilcún,,2018,2903977.0,37.0,True
+9119,Vilcún,,2019,44419332.0,23.0,True
+9119,Vilcún,,2020,44657754.0,32.0,True
+9119,Vilcún,,2021,36257683.0,34.0,True
+9119,Vilcún,,2022,2537367.0,30.0,True
+9119,Vilcún,,2023,,,False
+9119,Vilcún,,2024,,,False
+9119,Vilcún,,2025,,,False
+9120,Villarrica,Pucón y Villarrica,2013,4125550.0,37.0,True
+9120,Villarrica,Pucón y Villarrica,2014,7542874.0,38.0,True
+9120,Villarrica,Pucón y Villarrica,2015,14322585.0,41.0,True
+9120,Villarrica,Pucón y Villarrica,2016,14876727.0,56.0,True
+9120,Villarrica,Pucón y Villarrica,2017,7082034.0,48.0,True
+9120,Villarrica,Pucón y Villarrica,2018,16439870.0,50.0,True
+9120,Villarrica,Pucón y Villarrica,2019,23355172.0,42.0,True
+9120,Villarrica,Pucón y Villarrica,2020,49955820.0,54.0,True
+9120,Villarrica,Pucón y Villarrica,2021,50089258.0,69.0,True
+9120,Villarrica,Pucón y Villarrica,2022,51679319.0,53.0,True
+9120,Villarrica,Pucón y Villarrica,2023,,,False
+9120,Villarrica,Pucón y Villarrica,2024,,,False
+9120,Villarrica,Pucón y Villarrica,2025,,,False
+9201,Angol,,2013,14990456.0,25.0,True
+9201,Angol,,2014,9738304.0,35.0,True
+9201,Angol,,2015,4398032.0,38.0,True
+9201,Angol,,2016,11077238.0,36.0,True
+9201,Angol,,2017,130500163.0,25.0,True
+9201,Angol,,2018,144681473.0,32.0,True
+9201,Angol,,2019,189609529.0,37.0,True
+9201,Angol,,2020,67430286.0,38.0,True
+9201,Angol,,2021,45819384.0,40.0,True
+9201,Angol,,2022,14804641.0,31.0,True
+9201,Angol,,2023,,,False
+9201,Angol,,2024,,,False
+9201,Angol,,2025,,,False
+9203,Curacautín,Araucanía Andina,2013,1822304.0,29.0,True
+9203,Curacautín,Araucanía Andina,2014,718322.0,31.0,True
+9203,Curacautín,Araucanía Andina,2015,2887188.0,28.0,True
+9203,Curacautín,Araucanía Andina,2016,1154889.0,22.0,True
+9203,Curacautín,Araucanía Andina,2017,12417553.0,24.0,True
+9203,Curacautín,Araucanía Andina,2018,36386581.0,34.0,True
+9203,Curacautín,Araucanía Andina,2019,28757600.0,40.0,True
+9203,Curacautín,Araucanía Andina,2020,20135489.0,32.0,True
+9203,Curacautín,Araucanía Andina,2021,53327833.0,28.0,True
+9203,Curacautín,Araucanía Andina,2022,31326144.0,27.0,True
+9203,Curacautín,Araucanía Andina,2023,,,False
+9203,Curacautín,Araucanía Andina,2024,,,False
+9203,Curacautín,Araucanía Andina,2025,,,False
+9205,Lonquimay,Araucanía Andina,2013,292082.0,28.0,True
+9205,Lonquimay,Araucanía Andina,2014,4509276.0,17.0,True
+9205,Lonquimay,Araucanía Andina,2015,5213857.0,16.0,True
+9205,Lonquimay,Araucanía Andina,2016,9772959.0,22.0,True
+9205,Lonquimay,Araucanía Andina,2017,14865870.0,22.0,True
+9205,Lonquimay,Araucanía Andina,2018,6394842.0,38.0,True
+9205,Lonquimay,Araucanía Andina,2019,3141486.0,41.0,True
+9205,Lonquimay,Araucanía Andina,2020,21113705.0,36.0,True
+9205,Lonquimay,Araucanía Andina,2021,36102389.0,28.0,True
+9205,Lonquimay,Araucanía Andina,2022,23871615.0,26.0,True
+9205,Lonquimay,Araucanía Andina,2023,,,False
+9205,Lonquimay,Araucanía Andina,2024,,,False
+9205,Lonquimay,Araucanía Andina,2025,,,False
+9211,Victoria,,2013,2642458.0,28.0,True
+9211,Victoria,,2014,5697290.0,25.0,True
+9211,Victoria,,2015,21074345.0,27.0,True
+9211,Victoria,,2016,21928045.0,33.0,True
+9211,Victoria,,2017,15951852.0,26.0,True
+9211,Victoria,,2018,1406318.0,29.0,True
+9211,Victoria,,2019,1749725.0,32.0,True
+9211,Victoria,,2020,3301688.0,35.0,True
+9211,Victoria,,2021,13490709.0,27.0,True
+9211,Victoria,,2022,12571305.0,24.0,True
+9211,Victoria,,2023,,,False
+9211,Victoria,,2024,,,False
+9211,Victoria,,2025,,,False
