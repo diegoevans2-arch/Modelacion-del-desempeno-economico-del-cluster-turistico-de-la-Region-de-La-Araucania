@@ -2,7 +2,9 @@
 
 > **Propósito de este documento.** Contexto autocontenido para que un asistente de IA (o un colaborador) comprenda el estado actual del proyecto sin acceso a la conversación que lo generó. Todas las cifras provienen de corridas reproducibles del código en `src/` y están verificadas contra los CSV de `BBDD/final/`.
 >
-> **Fecha del estado:** julio 2026. **Período del panel:** 2013–2024.
+> **Fecha del estado:** julio 2026 (sincronizado con `Tesis_Doctoral_Barra_Avila_Version_29.07.2026.docx`). **Período del panel:** 2013–2024.
+>
+> **Novedad clave respecto de versiones previas de este contexto:** los Capítulos III (Metodología) y IV (Resultados) **ya están integrados en la tesis** con las cifras intactas; el Capítulo V (Conclusiones) existe pero está sin desarrollar (ver §10).
 
 ---
 
@@ -184,20 +186,33 @@ Ninguna invalida los hallazgos; todas están declaradas con vía de resolución.
 
 ## 9. Pendientes (prioridad)
 
-1. **EMAT mensual/comunal** → habilita D1 y multiplica observaciones temporales. *Máxima prioridad.*
+1. **EMAT mensual/comunal** → habilita D1 y multiplica observaciones temporales. *Máxima prioridad de datos.*
 2. **SERNATUR con fecha de inscripción** → convierte D4 en serie temporal.
 3. **Población comunal base Censo 2024** → cuando el INE la publique.
-4. **Redacción:** Capítulos III y IV en borrador Markdown (`Documentación/Capitulo_III_*.md`, `Capitulo_IV_*.md`); falta integrarlos al `.docx` maestro.
+4. **Redacción del Capítulo V (Conclusiones)** → en la tesis vigente existe como marcador de posición ("Este capítulo se desarrollará…"). *Máxima prioridad de redacción.* Debe cubrir: cumplimiento de objetivos, contrastación final de hipótesis, contribuciones teóricas y metodológicas, implicancias para la decisión territorial, limitaciones y líneas futuras.
+5. **Actualizar cifras si entra D1** → al incorporar la dimensión de actividad turística, el IDEC y los resultados de §7 cambian, y con ellos las Tablas 4.1–4.7 de la tesis.
 
 ---
 
 ## 10. Estado de documentos
 
-- `README.md` — actualizado al diseño real (antes sobredeclaraba avance).
-- `Documentación/Capitulo_III_Metodologia.md` — borrador completo.
-- `Documentación/Capitulo_IV_Resultados.md` — borrador completo (antes vacío).
+**Tesis maestra:** `Documentación/Tesis_Doctoral_Barra_Avila_Version_29.07.2026.docx` (~11.800 palabras, ~50 pp.). Reemplaza al `Tesis_Doctoral_Barra_Avila.docx` original (borrado). Estructura completa I–V con tabla de contenido, tablas y figuras.
+
+| Capítulo | Estado en la tesis vigente |
+|---|---|
+| I — El Problema | Completo |
+| II — Marco Teórico (incl. estado del arte internacional/latinoamericano/nacional, §2.10–2.13) | Completo |
+| **III — Metodología** | ✅ **Integrado** (12 secciones + Tablas 3.1–3.3, Figura 3.1). Incorpora secciones propias del autor: 3.8.6 definición operacional del IDEC, 3.11.4 aporte metodológico |
+| **IV — Resultados** | ✅ **Integrado** (Tablas 4.1–4.7, Figura 4.1). Cifras verificadas idénticas a los CSV de `BBDD/final/`. Añade 4.2.4 y 4.7.3 (reflexión integradora), consistentes con los resultados |
+| **V — Conclusiones** | ⏳ **Placeholder** — sólo enuncia lo que abordará; sin desarrollar |
+
+**Coherencia verificada:** las cifras clave de la tesis (R² 0,76; MAE 0,067; Theil −53,5 %; β −0,033; importancias 0,189/0,106; k=4; ARI 0,79; idiosincrasia 0,918/0,000) coinciden con las salidas del código.
+
+**Documentos de apoyo en el repo:**
+- `README.md` — actualizado al diseño real.
+- `Documentación/Capitulo_III_Metodologia.md` y `Capitulo_IV_Resultados.md` — borradores fuente en Markdown (origen de lo integrado al `.docx`).
 - `BBDD/README.md` — especificación de levantamiento de datos pendientes.
-- `.docx` maestro (`Tesis_Doctoral_Barra_Avila.docx`) — **no modificado**; Caps I–III previos describen el diseño antiguo (comunal sin las fuentes actuales) y Cap I–V estaban vacíos.
+- `Documentación/documentacion_2026-05-26_protocolo-investigacion-barra.md` — protocolo original.
 
 ---
 

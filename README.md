@@ -159,8 +159,8 @@ python -m src.build_panel        # genera BBDD/final/panel_nivelA_comunal.csv
 | Dimensión D1 — actividad turística (EMAT) | 0 % *(pendiente levantamiento)* |
 | Modelos supervisados (H1, H2) | 100 % |
 | Clustering y desigualdad territorial (H3) | 100 % |
-| Redacción Capítulo III (Metodología) | Borrador |
-| Redacción Capítulo IV (Resultados) | Borrador |
+| Redacción Capítulos I–IV (integrados en la tesis) | 100 % |
+| Redacción Capítulo V (Conclusiones) | Pendiente *(placeholder en la tesis)* |
 
 ### Pendientes de datos
 
