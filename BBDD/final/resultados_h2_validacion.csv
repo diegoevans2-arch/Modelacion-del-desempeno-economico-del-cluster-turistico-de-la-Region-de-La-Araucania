@@ -1,4 +1,9 @@
 esquema,modelo,n_test,MAE,RMSE,R2
+comuna,Media (base),152,0.1624,0.231,-0.2845
+comuna,Regresión lineal,152,0.3793,0.7309,-11.8596
+comuna,Ridge (regularizada),152,0.2271,0.4043,-2.9346
+comuna,Árbol de decisión,152,0.1998,0.3128,-1.3544
+comuna,Random Forest,152,0.1699,0.2379,-0.3619
 temporal,Media (base),65,0.1272,0.1854,-0.0222
 temporal,Regresión lineal,65,0.1276,0.1786,0.0508
 temporal,Ridge (regularizada),65,0.1172,0.1595,0.2432
@@ -9,8 +14,8 @@ bloques,Regresión lineal,152,0.1017,0.1405,0.5247
 bloques,Ridge (regularizada),152,0.1077,0.1687,0.3152
 bloques,Árbol de decisión,152,0.0691,0.1346,0.5641
 bloques,Random Forest,152,0.0651,0.0994,0.7621
-comuna,Media (base),152,0.1624,0.231,-0.2845
-comuna,Regresión lineal,152,0.3793,0.7309,-11.8596
-comuna,Ridge (regularizada),152,0.2271,0.4043,-2.9346
-comuna,Árbol de decisión,152,0.1998,0.3128,-1.3544
-comuna,Random Forest,152,0.1699,0.2379,-0.3619
+aleatorio,Media (base),152,0.1395,0.2049,-0.0109
+aleatorio,Regresión lineal,152,0.1002,0.1359,0.5557
+aleatorio,Ridge (regularizada),152,0.0991,0.1466,0.4828
+aleatorio,Árbol de decisión,152,0.0716,0.1367,0.5501
+aleatorio,Random Forest,152,0.0582,0.0914,0.7989
