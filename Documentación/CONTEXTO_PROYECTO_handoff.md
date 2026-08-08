@@ -173,6 +173,31 @@ R² por modelo y esquema de validación:
 
 ---
 
+## 7-bis. Variable CET — Choques Exógenos Territoriales
+
+Variable **dinámica ingresada por el usuario** para simular escenarios de choque exógeno al rubro turístico (crisis sanitarias, conflictividad, desastres). Implementada en `src/features/cet.py` + `models/supervisado.simular_cet()`.
+
+- **Rango [0,1]**, donde **1 = sin choque (valor por defecto)** y 0 = choque máximo.
+- Acepta escalar (`cet=0.7`), por comuna (`{9115: 0.5}`), por comuna-año (`{(9115,2025): 0.5}`) o DataFrame.
+- Serie histórica comuna×año construida desde eventos documentados (COVID 2020–22; conflictividad en Malleco). **Las intensidades son supuestos declarados, no mediciones — recalibrar con fuentes.**
+
+**Dos modos, y por qué:**
+
+| Modo | Mecanismo | Estado |
+|---|---|---|
+| **`estructural`** (por defecto) | El modelo proyecta el IDEC y el choque se aplica como atenuación `IDEC·[1−λ(1−CET)]`, con λ declarado (default 0,6) | ✅ **Recomendado** |
+| `aprendido` | La CET entra como predictor y el bosque infiere el efecto | ⚠️ Mal identificado hoy |
+
+**Hallazgo que motivó el diseño (importante, verificado):** el modo aprendido produce un **signo espurio positivo** (un choque máximo *subiría* el IDEC +3,7 %). Causa: la correlación empírica CET↔IDEC es **−0,004 (nula)** y **6 de 13 comunas aumentaron** su IDEC durante la pandemia (Curacautín +37,9 %, Melipeuco +26,4 %). El IDEC vigente mide desempeño **estructural** —resiliente al choque—, mientras el colapso ocurrió en los **flujos** (llegadas −57 % en 2020), que corresponden a **D1, la dimensión ausente**.
+
+**Trampa técnica documentada:** si la CET entrara al entrenamiento como constante = 1 tendría varianza cero, importancia exactamente 0, y mover la perilla no cambiaría nada (verificado: cambio 0,0000000000). Es un fallo silencioso. Por eso existe la serie histórica.
+
+**Al incorporar D1:** reevaluar el modo aprendido —debería identificarse correctamente— y verificar que ninguna componente de la CET provenga de EMAT (sería endógena).
+
+Salidas: `BBDD/processed/cet_serie_historica.csv`, `BBDD/final/resultados_cet_curva_respuesta.csv`.
+
+---
+
 ## 8. Limitaciones declaradas (ya en los capítulos)
 
 1. **Falta D1** (actividad turística / EMAT) — el IDEC mide desempeño estructural, no flujos.

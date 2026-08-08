@@ -59,6 +59,11 @@ PREDICTORES = [
     # Demografía
     "poblacion",
     "poblacion_laboral",
+    # Choques exógenos al rubro turístico (ver src/features/cet.py).
+    # Entra al entrenamiento con su serie histórica —no como constante—, para
+    # que el modelo aprenda una elasticidad real y la simulación de escenarios
+    # tenga efecto. Con la variable constante en 1 su importancia sería 0.
+    "cet",
     # Tendencia
     "anio",
 ]
@@ -229,6 +234,144 @@ def importancia_variables(df, predictores=None, objetivo=OBJETIVO,
     tabla.attrs["r2_medio_folds"] = float(np.mean(r2_folds))
     tabla.attrs["esquema"] = esquema
     return tabla
+
+
+def entrenar(df, predictores=None, objetivo=OBJETIVO, modelo=None):
+    """Entrena el modelo final sobre todo el panel, para simulación.
+
+    Devuelve `(modelo_ajustado, predictores)`. A diferencia de `evaluar()`,
+    que estima el desempeño fuera de muestra, aquí se usa toda la información
+    disponible porque el objetivo es proyectar escenarios, no medir error.
+    """
+    predictores = predictores or PREDICTORES
+    verificar_circularidad(predictores, objetivo)
+
+    d = df.dropna(subset=predictores + [objetivo])
+    X = d[predictores].to_numpy(dtype=float)
+    y = d[objetivo].to_numpy(dtype=float)
+
+    modelo = modelo or RandomForestRegressor(
+        n_estimators=500, min_samples_leaf=3, max_features="sqrt",
+        random_state=42, n_jobs=-1
+    )
+    return modelo.fit(X, y), predictores
+
+
+def simular_cet(df, cet=None, modelo=None, predictores=None, objetivo=OBJETIVO,
+                comunas=None, anio=None, modo="estructural",
+                elasticidad=None, ponderar_exposicion=False):
+    """Proyecta el IDEC bajo un escenario de Choques Exógenos Territoriales.
+
+    Parameters
+    ----------
+    cet : None | float | dict | DataFrame
+        Escenario a simular. **Si es None se usa el valor neutro 1,0**
+        (condiciones normales, sin choque). Ver `features.cet.aplicar_escenario`.
+    modo : {"estructural", "aprendido"}
+        - "estructural" (por defecto): el modelo proyecta el IDEC y el choque
+          se aplica como atenuación con elasticidad declarada. Dirección
+          garantizada y parámetro auditable. **Modo recomendado.**
+        - "aprendido": la CET entra como predictor y el bosque infiere su
+          efecto. Con el IDEC vigente esta elasticidad está mal identificada
+          (ver `features.cet.atenuar`); se conserva para el análisis de
+          sensibilidad y para cuando D1 esté disponible.
+    elasticidad : float, optional
+        λ ∈ [0,1] del modo estructural. Por defecto `cet.ELASTICIDAD_DEFAULT`.
+    ponderar_exposicion : bool
+        Si True, pondera λ por la intensidad turística de cada comuna
+        (choques específicos del rubro). Si False —por defecto— el choque
+        afecta por igual a todo el territorio.
+
+    Returns
+    -------
+    DataFrame: comuna, comuna_nombre, anio, cet, IDEC_observado,
+    IDEC_base (CET=1), IDEC_escenario, delta, delta_pct.
+    """
+    from src.features import cet as mcet
+
+    if modo not in ("estructural", "aprendido"):
+        raise ValueError(f"modo no reconocido: {modo!r}")
+
+    predictores = predictores or PREDICTORES
+    if modelo is None:
+        modelo, predictores = entrenar(df, predictores, objetivo)
+
+    d = df.dropna(subset=[c for c in predictores if c != "cet"] + [objetivo]).copy()
+    if comunas is not None:
+        d = d[d["comuna"].isin(comunas)]
+    if anio is not None:
+        d = d[d["anio"] == anio]
+    if d.empty:
+        raise ValueError("El filtro comunas/anio no dejó observaciones que proyectar")
+
+    base = mcet.aplicar_escenario(d, mcet.CET_NEUTRO)
+    esc = mcet.aplicar_escenario(d, cet)
+
+    pred_base = modelo.predict(base[predictores].to_numpy(dtype=float))
+
+    if modo == "aprendido":
+        pred_esc = modelo.predict(esc[predictores].to_numpy(dtype=float))
+    else:
+        exposicion = (
+            d["alojamientos_por_mil_hab"].to_numpy()
+            if ponderar_exposicion and "alojamientos_por_mil_hab" in d.columns
+            else None
+        )
+        pred_esc = mcet.atenuar(
+            pred_base,
+            esc["cet"].to_numpy(),
+            elasticidad=(mcet.ELASTICIDAD_DEFAULT if elasticidad is None
+                         else elasticidad),
+            exposicion=exposicion,
+        )
+
+    out = pd.DataFrame(
+        {
+            "comuna": d["comuna"].to_numpy(),
+            "comuna_nombre": d.get("comuna_nombre", pd.Series(index=d.index)).to_numpy(),
+            "anio": d["anio"].to_numpy(),
+            "cet": esc["cet"].to_numpy(),
+            "IDEC_observado": d[objetivo].to_numpy(),
+            "IDEC_base": pred_base,
+            "IDEC_escenario": pred_esc,
+        }
+    )
+    out["delta"] = out["IDEC_escenario"] - out["IDEC_base"]
+    out["delta_pct"] = np.where(
+        out["IDEC_base"] > 0, 100 * out["delta"] / out["IDEC_base"], np.nan
+    )
+    out.attrs["modo"] = modo
+    return out
+
+
+def curva_respuesta_cet(df, valores=None, modelo=None, predictores=None,
+                        objetivo=OBJETIVO, **kwargs):
+    """Respuesta media del IDEC ante distintos niveles de CET.
+
+    Es la verificación de que la variable **efectivamente opera**: si el IDEC
+    proyectado no varía al mover la CET, la variable entró como constante y el
+    modelo la está ignorando (ver advertencia en `features/cet.py`).
+    """
+    valores = valores if valores is not None else [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.3, 0.0]
+    filas = []
+    for v in valores:
+        r = simular_cet(df, cet=v, modelo=modelo, predictores=predictores,
+                        objetivo=objetivo, **kwargs)
+        filas.append(
+            {
+                "cet": v,
+                "IDEC_medio": round(r["IDEC_escenario"].mean(), 4),
+                "delta_medio": round(r["delta"].mean(), 4),
+                "delta_pct_medio": round(r["delta_pct"].mean(), 2),
+            }
+        )
+    t = pd.DataFrame(filas)
+    if t["delta_medio"].abs().max() < 1e-9:
+        t.attrs["alerta"] = (
+            "La CET no produce ningún efecto: entró al entrenamiento como "
+            "constante y el modelo la ignora."
+        )
+    return t
 
 
 def _clonar(modelo):

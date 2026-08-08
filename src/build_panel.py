@@ -17,6 +17,7 @@ import pandas as pd
 
 from src import config
 from src.data import bip, poblacion, sernatur, sii
+from src.features import cet as fcet
 from src.features import diagnostics as dg
 from src.features import inversion as finv
 
@@ -84,6 +85,10 @@ def construir(comunas=None, anio_inicio=ANIO_INICIO, anio_fin=ANIO_FIN):
     # comunas de tamaño muy distinto.
     for col in [c for c in panel.columns if c.startswith(("ventas_uf_", "n_trabajadores_"))]:
         panel[f"{col}_pc"] = panel[col] / panel["poblacion"]
+
+    # Choques exógenos territoriales: serie histórica documentada. El usuario
+    # puede sobrescribirla para simular escenarios (features/cet.py).
+    panel = fcet.agregar_cet(panel)
 
     return panel.sort_values(["comuna", "anio"]).reset_index(drop=True)
 
