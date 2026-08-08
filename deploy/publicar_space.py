@@ -1,13 +1,17 @@
 """Crea el Space en Hugging Face y sube la aplicación.
 
-Requiere haber iniciado sesión previamente:
+Requiere haber iniciado sesión previamente con el CLI actual:
 
-    huggingface-cli login
+    hf auth login
 
-Uso:
+(`huggingface-cli` quedó obsoleto y ya no funciona.)
+
+Uso, desde la raíz del repositorio:
     python deploy/publicar_space.py                 # simulacro, no publica nada
     python deploy/publicar_space.py --publicar      # crea el Space y sube
     python deploy/publicar_space.py --publicar --privado
+
+Desde dentro de deploy/, invóquese como `python publicar_space.py`.
 
 El modo por defecto es un simulacro deliberado: crear un Space público es una
 acción de publicación, y conviene que sea explícita.
@@ -63,7 +67,8 @@ def main():
 
     if not get_token():
         sys.exit("\nERROR: no hay sesión iniciada.\n"
-                 "Ejecute primero:  huggingface-cli login")
+                 "Ejecute primero:  hf auth login\n"
+                 "(el antiguo `huggingface-cli` ya no funciona)")
     quien = HfApi().whoami().get("name")
     print(f"\nAutenticado como: {quien}")
     if quien != USUARIO:

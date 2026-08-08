@@ -8,7 +8,7 @@ sdk_version: 6.22.0
 app_file: app.py
 pinned: false
 license: mit
-short_description: Simulador del desempeño económico del clúster turístico de La Araucanía
+short_description: Desempeño económico del clúster turístico de La Araucanía
 ---
 
 # Simulador IDEC — Clúster Turístico de La Araucanía
