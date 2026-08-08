@@ -16,7 +16,7 @@ comunas por tamaño demográfico en vez de por intensidad de desempeño.
 import pandas as pd
 
 from src import config
-from src.data import bip, poblacion, sernatur, sii
+from src.data import bip, conaf, poblacion, sernatur, sii
 from src.features import cet as fcet
 from src.features import diagnostics as dg
 from src.features import inversion as finv
@@ -46,6 +46,11 @@ def construir(comunas=None, anio_inicio=ANIO_INICIO, anio_fin=ANIO_FIN):
     conexos = sii.panel_sectores_conexos(
         comunas=comunas, anio_inicio=anio_inicio, anio_fin=anio_fin
     )
+    # Visitación a áreas protegidas (CONAF): flujo turístico observado,
+    # exógeno al IDEC. Entra como predictor, no como componente del índice.
+    visitas = conaf.panel_visitas_comunal(
+        comunas=comunas, anio_inicio=anio_inicio, anio_fin=anio_fin
+    )
 
     # --- Integración ---------------------------------------------------------
     cols_inv = [
@@ -59,6 +64,8 @@ def construir(comunas=None, anio_inicio=ANIO_INICIO, anio_fin=ANIO_FIN):
         .merge(cap[["comuna", "n_alojamientos", "n_clases", "share_regional"]],
                on="comuna", how="left")
         .merge(conexos, on=["comuna", "anio"], how="left")
+        .merge(visitas[["comuna", "anio", "visitas_snaspe", "tiene_snaspe"]],
+               on=["comuna", "anio"], how="left")
     )
 
     # --- Normalización -------------------------------------------------------
@@ -70,6 +77,7 @@ def construir(comunas=None, anio_inicio=ANIO_INICIO, anio_fin=ANIO_FIN):
         "inversion_lag2": "inversion_pc_lag2",
         "stock_capital_lag1": "stock_capital_pc_lag1",
         "n_alojamientos": "alojamientos_pc",
+        "visitas_snaspe": "visitas_snaspe_pc",
     }
     for origen, destino in per_capita.items():
         panel[destino] = panel[origen] / panel["poblacion"]

@@ -97,23 +97,83 @@ contenida en el índice, o bien carecería de contenido turístico genuino.
 El registro de estos ensayos constituye evidencia de que la limitación fue
 identificada, cuantificada y resuelta de forma deliberada.
 
-## 6. Vías de resolución (requieren nuevo levantamiento)
+## 6. Verificación de la EMAT sub-regional
 
-Ordenadas por calidad de la solución:
+La vía de solución más limpia habría sido obtener la EMAT con desagregación
+inferior a la región. Se verificó directamente en el Sistema de Información de
+Estadísticas en Turismo (SIET) de SERNATUR, que aloja el Reporte Dinámico EMAT.
 
-1. **EMAT sub-regional.** Verificar si el Reporte Dinámico del INE permite
-   extracción por provincia, comuna o destino turístico. Elimina el problema en
-   su origen.
-2. **Flujos turísticos observados de fuentes independientes** —visitantes a
-   áreas silvestres protegidas, pasos fronterizos, patentes municipales—, que
-   cumplen simultáneamente los cuatro criterios de §2 por no provenir del SII.
-3. **Reformulación de D1 con indicadores de precio** (ADR, RevPAR) en lugar de
-   volumen, lo que atenúa la redundancia con D3 aunque no elimina la necesidad
-   de desagregar.
+**La plataforma sí contempla la dimensión “destino turístico”**, con cuatro
+destinos para La Araucanía —Araucanía Andina, Araucanía Lacustre, Temuco y
+alrededores, y Resto Región— que coinciden en lo esencial con la delimitación
+del clúster adoptada en §3.5.2 de la tesis.
 
-## 7. Reproducción
+Sin embargo, **el propio reporte declara que esa apertura está suspendida**:
 
-Los ensayos son reproducibles con `src/features/diagnostics.py` sobre el panel
-`BBDD/final/panel_idec_comunal.csv`, aplicando cada ponderador a la serie
-regional EMAT 2017–2024 y evaluando `descomposicion_varianza()` y
+> «Desde abril a la fecha existe información que no se puede mostrar debido a
+> que la estimación del porcentaje de establecimientos de alojamiento turístico
+> que cerró de manera total o parcial alcanzó más del 50 %, por el impacto de
+> la crisis sanitaria ocasionada por COVID-19, por lo que se publican los datos
+> a nivel nacional y total regional cuando corresponda, **sin incluir apertura
+> por clase, residencia y destino turístico**.»
+> — Notas del Reporte Dinámico EMAT, SIET/SERNATUR
+
+Esto es consistente con lo observado en los datos: desde 2020 las columnas de
+residencia (chilenos/extranjeros) figuran como *N/A*, y la consulta por
+cualquiera de los cuatro destinos devuelve la cifra regional agregada.
+
+**Consecuencia:** la apertura por destino existió hasta marzo de 2020, pero
+desaparece justo en el período que concentra la información de choque. Incluso
+en el mejor escenario se dispondría de tres años y cuatro destinos, frente a
+las doce anualidades y trece comunas que requiere el panel. La vía queda
+descartada.
+
+*Nota de cautela:* se intentó además extraer los años previos a 2020 mediante
+consultas directas al servicio del SIET, pero los resultados fueron
+internamente inconsistentes (el agregado regional coincidía exactamente con uno
+de los destinos, y la suma de destinos excedía el total). Esas cifras **no se
+consideran válidas** y no se emplean en la investigación.
+
+## 7. Aprovechamiento de las fuentes exploradas
+
+El levantamiento realizado para resolver D1 produjo, aunque no la dimensión
+buscada, una incorporación de valor: los registros de **visitantes a Áreas
+Silvestres Protegidas (SNASPE) de CONAF**, publicados por SIET con cobertura
+2012–2024, mensual y por unidad.
+
+Esta fuente **no es válida como ponderador** —Villarrica, segunda comuna en
+oferta hotelera, carece de áreas protegidas y recibiría cero actividad, mientras
+R.N. Malalcahuello concentra cerca del 60 % de la visitación regional por su
+condición de centro de esquí de visitantes de día—, pero **sí cumple los cuatro
+criterios de §2 como variable explicativa**: es flujo turístico observado,
+comunal, dinámico e independiente del SII (correlaciones de +0,30 con D2 y
++0,31 con D3).
+
+Incorporada al panel como predictor (`visitas_snaspe_pc`), mejora
+sustantivamente la capacidad predictiva del modelo:
+
+| Esquema de validación | R² sin CONAF | R² con CONAF | Δ |
+|---|---|---|---|
+| Temporal | 0,751 | **0,809** | +0,057 |
+| Bloques temporales | 0,631 | **0,762** | +0,132 |
+| Por comuna | −0,591 | **−0,362** | +0,229 |
+
+Pasa además a ser **la variable de mayor importancia predictiva del modelo**
+(0,345 por permutación fuera de muestra, casi el triple de la segunda).
+
+Adicionalmente, permite **calibrar empíricamente la variable CET** de choques
+exógenos: la visitación regional cayó a 0,475 de su nivel de 2019 durante 2020,
+frente al supuesto declarado de 0,45. La coincidencia respalda ese supuesto,
+si bien la recuperación de 2021 diverge (0,948 en CONAF frente a 0,50 en EMAT),
+porque el turismo de día al aire libre se normalizó antes que el alojamiento.
+
+## 8. Reproducción
+
+Los ensayos de ponderación son reproducibles con `src/features/diagnostics.py`
+sobre el panel `BBDD/final/panel_idec_comunal.csv`, aplicando cada ponderador a
+la serie regional EMAT 2017–2024 y evaluando `descomposicion_varianza()` y
 `rango_efectivo()`.
+
+Los datos de CONAF se encuentran en `BBDD/processed/conaf_snaspe_araucania.csv`
+y su tratamiento en `src/data/conaf.py`, que documenta el mapeo unidad→comuna
+y las limitaciones de la fuente.

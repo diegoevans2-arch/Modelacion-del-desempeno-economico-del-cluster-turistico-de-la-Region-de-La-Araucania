@@ -56,6 +56,8 @@ PREDICTORES = [
     "n_trabajadores_comercio_pc",
     "n_trabajadores_transporte_pc",
     "n_trabajadores_recreativas_pc",
+    # Flujo turístico observado (CONAF/SNASPE) — exógeno al IDEC
+    "visitas_snaspe_pc",
     # Demografía
     "poblacion",
     "poblacion_laboral",

@@ -139,6 +139,8 @@ Importancia por permutación fuera de muestra (RF, R²=0,68). Predictores **exó
 
 Construcción e inmobiliarias dominan (rastro de inversión turística privada). **Inversión pública sin señal predictiva detectable** — leer como "no se detecta", no "no existe" (BIP mide toda la inversión, no la turística; 13 comunas = baja potencia).
 
+> **ACTUALIZACIÓN (ago-2026):** se incorporó **CONAF/SNASPE** (visitantes a áreas protegidas, `visitas_snaspe_pc`) como predictor exógeno. Las cifras de H1/H2 de abajo corresponden al modelo actualizado. R² temporal subió de 0,751 a **0,809**, y `visitas_snaspe_pc` es ahora el predictor más importante (0,345). Ver §7-ter.
+
 ### H2 — Precisión predictiva — SOSTENIDA (alcance temporal)
 R² por modelo y esquema de validación:
 
@@ -195,6 +197,26 @@ Variable **dinámica ingresada por el usuario** para simular escenarios de choqu
 **Al incorporar D1:** reevaluar el modo aprendido —debería identificarse correctamente— y verificar que ninguna componente de la CET provenga de EMAT (sería endógena).
 
 Salidas: `BBDD/processed/cet_serie_historica.csv`, `BBDD/final/resultados_cet_curva_respuesta.csv`.
+
+---
+
+## 7-ter. CONAF/SNASPE y el cierre de D1
+
+**Fuente:** visitantes a Áreas Silvestres Protegidas (CONAF), vía SIET/SERNATUR. 2012–2024, mensual, por unidad. 13 unidades en La Araucanía. Módulo `src/data/conaf.py`; datos en `BBDD/processed/conaf_snaspe_araucania.csv`.
+
+**Rol: predictor exógeno, NO componente del IDEC ni ponderador de D1.**
+
+| Uso | Resultado |
+|---|---|
+| Predictor H1/H2 | R² temporal 0,751 → **0,809**; predictor más importante (**0,345**) |
+| Calibración CET | 2020 observado **0,475** vs supuesto 0,45 → respalda el supuesto |
+| Validación externa | Malalcahuello +252 % (2013→2024) corrobora la convergencia de la Araucanía Andina desde fuente independiente |
+
+**Por qué NO como ponderador de D1:** Villarrica —2ª comuna en oferta hotelera, 88 alojamientos— **no tiene áreas protegidas** y recibiría cero actividad turística. Malalcahuello (centro de esquí, visitantes de día) concentra ~60 % de la visitación regional. Mide visitación a parques, no turismo de alojamiento.
+
+**D1 queda cerrada.** Cuatro vías descartadas con evidencia: población (idiosincrasia 0,0008), SII (doble conteo r≈0,8), CONAF (cobertura estructural incompleta) y EMAT sub-regional. Sobre esta última: el SIET **sí tiene** dimensión “destino turístico” (4 destinos para La Araucanía, casi calcan el clúster), pero el reporte declara oficialmente que la apertura por destino está **suspendida desde abril de 2020** por el cierre de >50 % de establecimientos durante la pandemia. Desaparece justo donde vive la información de choque. Detalle completo en `Documentación/Nota_metodologica_D1_desagregacion.md`.
+
+**Pista no explorada:** SIET ofrece también `repDinamicoPDI` — llegadas de extranjeros por paso fronterizo (Mamuil Malal/Curarrehue, Pino Hachado e Icalma/Lonquimay). Otra señal turística comuna×año exógena al SII, en la misma línea que CONAF.
 
 ---
 
