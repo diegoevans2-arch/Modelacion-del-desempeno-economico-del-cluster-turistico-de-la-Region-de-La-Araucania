@@ -20,6 +20,9 @@ BBDD/raw/
 !BBDD/final/*.csv
 !BBDD/processed/*.csv
 
+# Artefactos de despliegue: el Space los necesita en el repositorio
+!deploy/*.csv
+
 # Jupyter
 .ipynb_checkpoints/
 */.ipynb_checkpoints/

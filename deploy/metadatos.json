@@ -1,0 +1,75 @@
+{
+  "descripcion": "Modelo predictivo del IDEC — clúster turístico de La Araucanía",
+  "objetivo": "IDEC",
+  "predictores": [
+    "inversion_pc_lag2",
+    "stock_capital_pc_lag1",
+    "ventas_uf_comercio_pc",
+    "ventas_uf_transporte_pc",
+    "ventas_uf_recreativas_pc",
+    "ventas_uf_inmobiliarias_pc",
+    "ventas_uf_construccion_pc",
+    "n_trabajadores_comercio_pc",
+    "n_trabajadores_transporte_pc",
+    "n_trabajadores_recreativas_pc",
+    "visitas_snaspe_pc",
+    "poblacion",
+    "poblacion_laboral",
+    "cet",
+    "anio"
+  ],
+  "n_observaciones": 156,
+  "comunas": [
+    "Angol",
+    "Carahue",
+    "Cunco",
+    "Curacautín",
+    "Lonquimay",
+    "Melipeuco",
+    "Nueva Imperial",
+    "Pucón",
+    "Saavedra",
+    "Temuco",
+    "Victoria",
+    "Vilcún",
+    "Villarrica"
+  ],
+  "anio_min": 2013,
+  "anio_max": 2024,
+  "metricas": {
+    "comuna": {
+      "R2": -0.3619,
+      "MAE": 0.1699,
+      "RMSE": 0.2379
+    },
+    "temporal": {
+      "R2": 0.8087,
+      "MAE": 0.0585,
+      "RMSE": 0.0802
+    },
+    "bloques": {
+      "R2": 0.7621,
+      "MAE": 0.0651,
+      "RMSE": 0.0994
+    },
+    "aleatorio": {
+      "R2": 0.7989,
+      "MAE": 0.0582,
+      "RMSE": 0.0914
+    }
+  },
+  "cet": {
+    "neutro": 1.0,
+    "elasticidad_default": 0.6
+  },
+  "versiones": {
+    "scikit_learn": "1.9.0",
+    "pandas": "2.2.2"
+  },
+  "limitaciones": [
+    "El IDEC integra tres dimensiones observadas (empleo, ingresos y capacidad). No incorpora flujos de visitantes: mide desempeño económico estructural.",
+    "El modelo no generaliza a comunas ausentes del panel (R² = -0.36 en validación por comuna). Sólo deben consultarse las 13 comunas incluidas.",
+    "No es una herramienta de pronóstico: los predictores sólo existen para 2013–2024. Las proyecciones son simulaciones de escenario sobre años observados.",
+    "La CET opera en modo estructural con elasticidad declarada; no es una elasticidad estimada de los datos."
+  ]
+}
