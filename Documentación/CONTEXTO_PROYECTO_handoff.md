@@ -100,7 +100,7 @@ $$Z_{kjit} = \frac{\ln(1+X_{kjit}) - \min}{\max - \min}, \quad D_{kit} = \frac{1
 
 - Normalización **per cápita** (crítico: en niveles el índice ordena por población; Temuco pasa de #1 en niveles a #4 per cápita).
 - Método por defecto **Min-Max logarítmico**, pool sobre todo el panel.
-- **Robusto:** Spearman 0,92–1,00 entre 4 métodos de normalización.
+- **Robusto:** Spearman 0,91–1,00 entre 4 métodos de normalización.
 
 **Dimensiones — estado:**
 

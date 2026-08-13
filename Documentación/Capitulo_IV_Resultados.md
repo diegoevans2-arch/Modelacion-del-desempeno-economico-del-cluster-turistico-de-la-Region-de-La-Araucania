@@ -70,7 +70,7 @@ La ausencia de D1 no constituye, por tanto, una omisión, sino una **limitación
 
 ### 4.3.2 Robustez al método de normalización
 
-El ordenamiento comunal que produce el IDEC es estable ante la elección del método de normalización. La correlación de Spearman entre los índices construidos con Min-Max, Min-Max logarítmico, Z-score y rango percentil se sitúa entre **0,92 y 1,00**. Las conclusiones sobre qué comunas rinden mejor no dependen, por tanto, de la decisión metodológica.
+El ordenamiento comunal que produce el IDEC es estable ante la elección del método de normalización. La correlación de Spearman entre los índices construidos con Min-Max, Min-Max logarítmico, Z-score y rango percentil se sitúa entre **0,91 y 1,00**. Las conclusiones sobre qué comunas rinden mejor no dependen, por tanto, de la decisión metodológica.
 
 ### 4.3.3 El IDEC como panel válido
 

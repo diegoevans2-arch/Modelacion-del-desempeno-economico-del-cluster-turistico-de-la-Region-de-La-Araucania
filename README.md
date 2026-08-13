@@ -91,7 +91,7 @@ Las variables se normalizan **per cápita** antes de agregar: en niveles, el ín
 | **D4 — Capacidad productiva** | alojamientos/1.000 hab., empresas p.c. | SERNATUR + SII | ✅ Observada |
 | **D1 — Actividad turística** | llegadas, pernoctaciones, ocupación | EMAT | ⏳ Pendiente (requiere EMAT comunal/mensual) |
 
-> El IDEC vigente integra **tres de las cuatro dimensiones**. D1 se incorporará al levantar EMAT. El índice es robusto al método de normalización (correlación de Spearman 0,92–1,00 entre Min-Max, Z-score, rank y Min-Max logarítmico).
+> El IDEC vigente integra **tres de las cuatro dimensiones**. D1 se incorporará al levantar EMAT. El índice es robusto al método de normalización (correlación de Spearman 0,91–1,00 entre Min-Max, Z-score, rank y Min-Max logarítmico).
 
 ---
 
@@ -100,16 +100,17 @@ Las variables se normalizan **per cápita** antes de agregar: en niveles, el ín
 Los tres hallazgos se sostienen sobre el panel comunal observado 2013–2024 (156 observaciones, 13 comunas).
 
 ### H1 — Relaciones no lineales
-Random Forest estima el IDEC con predictores **exógenos** al índice (inversión pública, sectores conexos, demografía). Las variables más relevantes por importancia de permutación son **construcción** e **inmobiliarias** — el rastro medible de la inversión turística privada. La inversión pública (BIP) no muestra señal predictiva detectable.
+Random Forest estima el IDEC con predictores **exógenos** al índice (visitación a áreas protegidas, inversión pública, sectores conexos, demografía). La variable más relevante por importancia de permutación es la **visitación a áreas silvestres protegidas** (0,345), seguida de **construcción** (0,123) e **inmobiliarias** (0,067). La inversión pública (BIP) no muestra señal predictiva detectable.
 
 ### H2 — Precisión predictiva
 | Modelo | R² (validación temporal) |
 |---|---|
-| **Random Forest** | **0,755** |
-| Árbol de decisión | 0,212 |
-| Ridge / Regresión lineal | < 0 |
+| **Random Forest** | **0,809** |
+| Árbol de decisión | 0,334 |
+| Ridge (regularizada) | 0,243 |
+| Regresión lineal | 0,051 |
 
-El ML supera netamente a los modelos lineales en **pronóstico temporal**. La generalización espacial (predecir una comuna no vista) es intrínsecamente limitada por el bajo número de unidades (13 comunas) y se declara como tal.
+El ML supera netamente a los modelos lineales en **pronóstico temporal** — y lo hace frente a una línea base competente, no frente a modelos mal especificados. La generalización espacial (predecir una comuna no vista) es intrínsecamente limitada por el bajo número de unidades (13 comunas) y se declara como tal.
 
 ### H3 — Desigualdad y agrupamientos territoriales
 - **Convergencia del clúster.** El índice de Theil del IDEC cae **53,5 %** entre 2013 y 2024 (σ-convergencia, *p* < 10⁻⁶), confirmada por β-convergencia (β = −0,033, *p* = 0,0002; velocidad ≈ 4 % anual). El motor es el alcance de los destinos de la **Araucanía Andina** (Curacautín +134 %, Melipeuco +111 %), no el deterioro de Pucón.
