@@ -2,9 +2,11 @@
 
 > **Propósito de este documento.** Contexto autocontenido para que un asistente de IA (o un colaborador) comprenda el estado actual del proyecto sin acceso a la conversación que lo generó. Todas las cifras provienen de corridas reproducibles del código en `src/` y están verificadas contra los CSV de `BBDD/final/`.
 >
-> **Fecha del estado:** julio 2026 (sincronizado con `Tesis_Doctoral_Barra_Avila_Version_29.07.2026.docx`). **Período del panel:** 2013–2024.
+> **Fecha del estado:** agosto 2026. **Período del panel:** 2013–2024.
 >
-> **Novedad clave respecto de versiones previas de este contexto:** los Capítulos III (Metodología) y IV (Resultados) **ya están integrados en la tesis** con las cifras intactas; el Capítulo V (Conclusiones) existe pero está sin desarrollar (ver §10).
+> **Alcance de este trabajo.** Cubre exclusivamente el **componente de Machine Learning** de la investigación: levantamiento e integración de datos, construcción del IDEC, modelación supervisada y no supervisada, y la redacción de los Capítulos III, IV y V, que dependen de ese componente. Los Capítulos I y II, las referencias bibliográficas y los anexos corresponden al autor de la tesis y **quedan fuera de este alcance** (ver §10).
+>
+> **Estado:** los Capítulos III, IV y V **están integrados en la tesis** con las cifras verificadas. El modelo está desplegado y operativo.
 
 ---
 
@@ -231,29 +233,49 @@ Ninguna invalida los hallazgos; todas están declaradas con vía de resolución.
 
 ---
 
-## 9. Pendientes (prioridad)
+## 9. Pendientes
 
-1. **EMAT mensual/comunal** → habilita D1 y multiplica observaciones temporales. *Máxima prioridad de datos.*
-2. **SERNATUR con fecha de inscripción** → convierte D4 en serie temporal.
-3. **Población comunal base Censo 2024** → cuando el INE la publique.
-4. **Redacción del Capítulo V (Conclusiones)** → en la tesis vigente existe como marcador de posición ("Este capítulo se desarrollará…"). *Máxima prioridad de redacción.* Debe cubrir: cumplimiento de objetivos, contrastación final de hipótesis, contribuciones teóricas y metodológicas, implicancias para la decisión territorial, limitaciones y líneas futuras.
-5. **Actualizar cifras si entra D1** → al incorporar la dimensión de actividad turística, el IDEC y los resultados de §7 cambian, y con ellos las Tablas 4.1–4.7 de la tesis.
+### 9.1 Dentro del alcance de ML — todos completados
+
+No queda trabajo analítico pendiente. Las tres hipótesis están contrastadas, el panel es reproducible y los Capítulos III–V están integrados en la tesis.
+
+Mejoras posibles a futuro, ninguna bloqueante:
+
+1. **Actualización anual del panel** → cuando el SII publique el año comercial 2025 (previsiblemente fines de 2026), extender el panel es mecánico: descargar `PUB_COMU_RUBR.xlsb`, ejecutar `python -m src.build_panel`, regenerar el Space. Igual para la visitación de CONAF.
+2. **Pasos fronterizos (PDI)** → `repDinamicoPDI` en SIET ofrece llegadas de extranjeros por paso fronterizo (Mamuil Malal/Curarrehue, Pino Hachado e Icalma/Lonquimay). Señal turística comuna×año exógena al SII, sin explorar.
+3. **SERNATUR con fecha de inscripción** → convertiría D4 en serie temporal.
+4. **Población comunal base Censo 2024** → cuando el INE la publique con desagregación comunal.
+5. **D1** → cerrada con evidencia (§7-ter). Sólo se reabre si el INE restituye la apertura por destino turístico de la EMAT. Si eso ocurre, recalcular IDEC, sensibilidad y las tres hipótesis: cambiarían los números de §7 y las Tablas 4.1–4.7.
+
+### 9.2 Fuera del alcance de ML — corresponden al autor de la tesis
+
+Estos puntos **no fueron abordados** en este trabajo y quedan pendientes:
+
+| Componente | Estado | Observación |
+|---|---|---|
+| **Capítulo II — Marco Teórico** | 🔴 Esquemático | 1.426 palabras para 14 secciones (2.1–2.14, incluidos tres estados del arte): unas 100 palabras por sección. Es el hueco mayor del documento. |
+| **Capítulo I — El Problema** | ⚠️ Delgado | 1.690 palabras para contexto, problema, justificación, objetivos e hipótesis. |
+| **Referencias** | ⚠️ 32 entradas | No incluyen la literatura que sustenta lo incorporado en el Capítulo III: estimación en áreas pequeñas, convergencia β y σ, importancia por permutación, método del codo, índices compuestos territoriales. |
+| **Anexos** | ❌ Ausentes | Material disponible para construirlos: salidas del diagnóstico, tablas de sensibilidad del IDEC, código. |
+| **Índices de tablas y figuras** | ❌ Ausentes | — |
+| **Tabla de contenido** | ⏳ Requiere actualización | En Word: clic derecho sobre el índice → *Actualizar toda la tabla*, para que aparezcan las secciones 5.1–5.8. |
 
 ---
 
 ## 10. Estado de documentos
 
-**Tesis maestra:** `Documentación/Tesis_Doctoral_Barra_Avila_Version_29.07.2026.docx` (~11.800 palabras, ~50 pp.). Reemplaza al `Tesis_Doctoral_Barra_Avila.docx` original (borrado). Estructura completa I–V con tabla de contenido, tablas y figuras.
+**Tesis maestra:** `Documentación/Tesis_Doctoral_Barra_Avila_Version_29.07.2026.docx` — **15.008 palabras, 960 párrafos, 17 tablas**. Estructura completa I–V con tabla de contenido.
 
-| Capítulo | Estado en la tesis vigente |
-|---|---|
-| I — El Problema | Completo |
-| II — Marco Teórico (incl. estado del arte internacional/latinoamericano/nacional, §2.10–2.13) | Completo |
-| **III — Metodología** | ✅ **Integrado** (12 secciones + Tablas 3.1–3.3, Figura 3.1). Incorpora secciones propias del autor: 3.8.6 definición operacional del IDEC, 3.11.4 aporte metodológico |
-| **IV — Resultados** | ✅ **Integrado** (Tablas 4.1–4.7, Figura 4.1). Cifras verificadas idénticas a los CSV de `BBDD/final/`. Añade 4.2.4 y 4.7.3 (reflexión integradora), consistentes con los resultados |
-| **V — Conclusiones** | ⏳ **Placeholder** — sólo enuncia lo que abordará; sin desarrollar |
+| Capítulo | Palabras | Estado |
+|---|---|---|
+| I — El Problema | 1.690 | ⚠️ Delgado — fuera del alcance de ML |
+| II — Marco Teórico (§2.1–2.14) | 1.426 | 🔴 Esquemático — fuera del alcance de ML |
+| **III — Metodología** | 3.371 | ✅ **Integrado** (12 secciones + Tablas 3.1–3.3, Figura 3.1). Incluye secciones propias del autor: 3.8.6 y 3.11.4 |
+| **IV — Resultados** | 3.455 | ✅ **Integrado** (Tablas 4.1–4.7, Figura 4.1). Incluye 4.2.4 y 4.7.3 del autor |
+| **V — Conclusiones** | 2.778 | ✅ **Integrado** (8 secciones, 9 subsecciones) |
+| Referencias | 533 | ⚠️ 32 entradas — fuera del alcance de ML |
 
-**Coherencia verificada:** las cifras clave de la tesis (R² 0,76; MAE 0,067; Theil −53,5 %; β −0,033; importancias 0,189/0,106; k=4; ARI 0,79; idiosincrasia 0,918/0,000) coinciden con las salidas del código.
+**Coherencia verificada:** las cifras de la tesis coinciden con las salidas del código — R² temporal **0,809**; MAE **0,059**; R² por comuna **−0,362**; importancia visitación **0,345**, construcción **0,123**; Theil **−53,5 %**; β **−0,033**; k = 4 con ARI **0,79**; idiosincrasia **0,918** (BIP) frente a **0,000** (contraejemplo); Spearman **0,91–1,00**.
 
 **Documentos de apoyo en el repo:**
 - `README.md` — actualizado al diseño real.
