@@ -128,34 +128,37 @@ $$Z_{kjit} = \frac{\ln(1+X_{kjit}) - \min}{\max - \min}, \quad D_{kit} = \frac{1
 
 ## 7. Resultados (cifras verificadas)
 
+> Todas las cifras de esta sección corresponden al modelo vigente, que incorpora CONAF/SNASPE como predictor (§7-ter), y coinciden con `BBDD/final/resultados_h1_importancia.csv` y `resultados_h2_validacion.csv`.
+
 ### H1 — Relaciones no lineales — SOSTENIDA
-Importancia por permutación fuera de muestra (RF, R²=0,68). Predictores **exógenos** al IDEC (control de circularidad activo).
+Importancia por permutación fuera de muestra (RF, R² medio de los folds = 0,788). Predictores **exógenos** al IDEC (control de circularidad activo).
 
 | Variable | Importancia |
 |---|---|
-| Ventas construcción p.c. | 0,189 |
-| Ventas inmobiliarias p.c. | 0,106 |
-| Población | 0,102 |
-| Trabajadores/ventas recreativas p.c. | ~0,09 |
-| **Inversión pública (BIP, lag2)** | **−0,003 (nula)** |
+| **Visitación áreas protegidas p.c.** | **0,345** |
+| Ventas construcción p.c. | 0,123 |
+| Trabajadores recreativas p.c. | 0,070 |
+| Ventas inmobiliarias p.c. | 0,067 |
+| Ventas recreativas p.c. | 0,050 |
+| Población | 0,043 |
+| Stock de capital público | 0,005 |
+| **Inversión pública (BIP, lag2)** | **−0,002 (nula)** |
 
-Construcción e inmobiliarias dominan (rastro de inversión turística privada). **Inversión pública sin señal predictiva detectable** — leer como "no se detecta", no "no existe" (BIP mide toda la inversión, no la turística; 13 comunas = baja potencia).
-
-> **ACTUALIZACIÓN (ago-2026):** se incorporó **CONAF/SNASPE** (visitantes a áreas protegidas, `visitas_snaspe_pc`) como predictor exógeno. Las cifras de H1/H2 de abajo corresponden al modelo actualizado. R² temporal subió de 0,751 a **0,809**, y `visitas_snaspe_pc` es ahora el predictor más importante (0,345). Ver §7-ter.
+La visitación observada domina, con importancia casi triple de la segunda variable: es el único registro que mide afluencia directa y no un proxy económico. **Inversión pública sin señal predictiva detectable** — leer como "no se detecta", no "no existe" (BIP mide toda la inversión, no la turística; 13 comunas = baja potencia).
 
 ### H2 — Precisión predictiva — SOSTENIDA (alcance temporal)
 R² por modelo y esquema de validación:
 
 | Modelo | Aleatorio* | Bloques | Temporal | Por comuna |
 |---|---|---|---|---|
-| Regresión lineal | −0,33 | −0,05 | −0,18 | −25,7 |
-| Ridge | −0,30 | −0,06 | −0,03 | −5,8 |
-| Árbol | 0,40 | 0,21 | 0,21 | −2,6 |
-| **Random Forest** | **0,69** | **0,64** | **0,76** | **−0,60** |
+| Regresión lineal | 0,56 | 0,53 | 0,05 | −11,86 |
+| Ridge | 0,48 | 0,32 | 0,24 | −2,94 |
+| Árbol | 0,55 | 0,56 | 0,33 | −1,35 |
+| **Random Forest** | **0,80** | **0,76** | **0,81** | **−0,36** |
 
-\* control de fuga temporal. RF temporal: MAE=0,067, R²=0,755.
+\* control de fuga temporal. RF temporal: MAE = 0,059, R² = 0,809.
 
-**Dos hallazgos:** (1) ML supera netamente a lineales (comparación justa — Ridge incluido a propósito). (2) La vulnerabilidad es **espacial, no temporal**: todos los modelos fallan al predecir una comuna no vista (R²<0), por sólo 13 unidades. H2 se reformula como **pronóstico temporal**, no generalización espacial.
+**Tres hallazgos:** (1) El ML supera a los lineales frente a una **línea base competente** —con los predictores actuales los modelos lineales ya no arrojan ajustes negativos—, no frente a modelos mal especificados. (2) La brecha es moderada bajo validación aleatoria (0,80 vs 0,56) y **máxima bajo la temporal** (0,81 vs 0,05): al extrapolar a años no observados lo lineal se desploma, lo que respalda la no linealidad de H1. (3) La vulnerabilidad es **espacial, no temporal**: todos los modelos fallan al predecir una comuna no vista, por sólo 13 unidades. H2 se reformula como **pronóstico temporal**, no generalización espacial.
 
 ### H3 — Desigualdad y agrupamientos — SOSTENIDA
 
