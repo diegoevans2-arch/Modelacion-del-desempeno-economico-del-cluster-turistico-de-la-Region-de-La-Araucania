@@ -132,7 +132,7 @@ D4 es la dimensión más débil temporalmente: el conteo de alojamientos de SERN
 
 ### 3.8.5 Alcance de la versión vigente
 
-El IDEC presentado integra **D2, D3 y D4**. La ausencia de D1 implica que el índice mide, con rigor, el **desempeño económico estructural** del clúster (empleo, ingresos y capacidad instalada), a la espera de incorporar los **flujos turísticos** propiamente tales. Esta delimitación se declara explícitamente y constituye una línea de trabajo inmediata, no una omisión.
+El IDEC presentado integra **D2, D3 y D4**. La ausencia de D1 implica que el índice mide, con rigor, el **desempeño económico estructural** del clúster (empleo, ingresos y capacidad instalada), sin incorporar los **flujos de visitantes**. Dicha incorporación no resultó posible con la información pública disponible: se evaluaron nueve esquemas de desagregación y se verificó que la fuente EMAT suspendió su apertura por destino turístico en 2020, según se detalla en §4.3.1. Esta delimitación se declara explícitamente y constituye una **restricción documentada de las fuentes**, no una omisión.
 
 ## 3.9 Procedimiento metodológico
 

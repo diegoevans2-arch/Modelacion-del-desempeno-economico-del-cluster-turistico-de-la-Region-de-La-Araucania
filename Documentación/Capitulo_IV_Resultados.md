@@ -211,4 +211,8 @@ Este hallazgo cuenta con **validación externa independiente**. La Reserva Nacio
 
 4. **Georreferencia tributaria y proyecciones de población.** Las cifras del SII se ubican por casa matriz y las poblaciones recientes son proyecciones anteriores al Censo 2024; ambas fuentes deberán actualizarse cuando se disponga de mejores registros.
 
+5. **Rezago de publicación de las fuentes.** El panel cierra en 2024 porque esa es la última anualidad disponible en las fuentes que construyen el índice, y no por una decisión del diseño. El Servicio de Impuestos Internos publica por año comercial con aproximadamente dieciocho meses de rezago —el año 2024 quedó disponible en noviembre de 2025—, dado que requiere el cierre de la Operación Renta y los procesos de fiscalización asociados. La visitación a áreas silvestres protegidas presenta un rezago equivalente. Las restantes fuentes sí alcanzan años posteriores —las proyecciones de población del INE llegan a 2035 y la EMAT regional a 2026—, pero resultan insuficientes por sí solas: el IDEC depende del SII para las dimensiones de empleo e ingresos y para el componente de empresas de la dimensión de capacidad.
+
+   Esta restricción es común a toda investigación que emplee registros tributarios comunales en Chile y no compromete la validez de los resultados, que se refieren íntegramente al período observado. La actualización del panel es, además, mecánica: incorporar una nueva anualidad requiere únicamente descargar los archivos actualizados y volver a ejecutar el procedimiento reproducible descrito en §3.9.
+
 Ninguna de estas limitaciones invalida los hallazgos: todas se declaran explícitamente y varias tienen una vía de resolución identificada, lo que refuerza —antes que debilita— la validez del estudio.
