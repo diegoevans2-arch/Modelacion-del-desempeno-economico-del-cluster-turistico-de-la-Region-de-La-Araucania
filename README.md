@@ -3,6 +3,10 @@
 > **Investigación Doctoral** · Doctorado en Ciencias Económicas Empresariales
 > TECH Universidad Tecnológica · Santiago, 2026
 
+[![Simulador IDEC](https://img.shields.io/badge/🏔️_Simulador_IDEC-Probar_en_línea-1f6f5c?style=for-the-badge)](https://huggingface.co/spaces/diegoevans2-arch/idec-araucania)
+
+**▶ [Simulador interactivo del IDEC](https://huggingface.co/spaces/diegoevans2-arch/idec-araucania)** — consulte el desempeño de cada comuna y simule escenarios de choques exógenos territoriales.
+
 ---
 
 ## Resumen
@@ -22,9 +26,10 @@ Esta investigación aplica técnicas de Machine Learning supervisado y no superv
 | **Área de estudio** | Región de La Araucanía, Chile |
 | **Unidad de análisis** | Comuna × año (panel) |
 | **Comunas del clúster** | 13 (núcleo de 8 + anillo de 5) |
-| **Período del panel** | 2013 – 2024 |
-| **Fuentes de datos** | SII · BIP · INE · SERNATUR · Banco Central |
+| **Período del panel** | 2013 – 2024 (156 observaciones) |
+| **Fuentes de datos** | SII · BIP · INE · SERNATUR · CONAF |
 | **Paradigma** | Positivista · Cuantitativo · Explicativo-Predictivo |
+| **Simulador** | [huggingface.co/spaces/diegoevans2-arch/idec-araucania](https://huggingface.co/spaces/diegoevans2-arch/idec-araucania) |
 | **Entrega final** | 10 de diciembre de 2026 |
 
 ---
@@ -60,7 +65,8 @@ El principio rector es **no imputar lo que puede observarse**. Las dimensiones d
 | **BIP** — Banco Integrado de Proyectos | Inversión pública ejecutada (`EBI_EJECUCION_PRESUPUESTARIA`) | **comuna × año** | 2013–2022* | ✅ Integrada |
 | **INE** — Proyecciones de población (base 2017) | Población total y en edad laboral | **comuna × año** | 2002–2035 | ✅ Integrada |
 | **SERNATUR** — Registro de alojamientos | Nº y clase de alojamientos | comuna (corte) | snapshot | ✅ Integrada |
-| **EMAT** — Encuesta Mensual de Alojamiento | Llegadas, pernoctaciones, ADR, RevPAR | región | 2017–2025 | ⚠️ Pendiente versión mensual |
+| **CONAF** — Visitantes a áreas silvestres protegidas | Visitación por unidad SNASPE | **comuna × año** | 2012–2024 | ✅ Integrada |
+| **EMAT** — Encuesta Mensual de Alojamiento | Llegadas, pernoctaciones, ADR, RevPAR | región | 2017–2026 | ❌ Sin desagregación comunal |
 
 \* El BIP reporta la ejecución con 2–3 años de rezago; se emplean versiones rezagadas (`lag2`) y de stock de capital, que cubren hasta 2024.
 
@@ -89,9 +95,11 @@ Las variables se normalizan **per cápita** antes de agregar: en niveles, el ín
 | **D2 — Empleo sectorial** | trabajadores turísticos p.c. | SII | ✅ Observada |
 | **D3 — Generación de ingresos** | ventas p.c., renta p.c. | SII | ✅ Observada |
 | **D4 — Capacidad productiva** | alojamientos/1.000 hab., empresas p.c. | SERNATUR + SII | ✅ Observada |
-| **D1 — Actividad turística** | llegadas, pernoctaciones, ocupación | EMAT | ⏳ Pendiente (requiere EMAT comunal/mensual) |
+| **D1 — Actividad turística** | llegadas, pernoctaciones, ocupación | EMAT | ❌ No construible |
 
-> El IDEC vigente integra **tres de las cuatro dimensiones**. D1 se incorporará al levantar EMAT. El índice es robusto al método de normalización (correlación de Spearman 0,91–1,00 entre Min-Max, Z-score, rank y Min-Max logarítmico).
+> El IDEC vigente integra **tres de las cuatro dimensiones** y mide, por tanto, desempeño económico **estructural**. El índice es robusto al método de normalización (correlación de Spearman 0,91–1,00 entre Min-Max, Z-score, rank y Min-Max logarítmico).
+
+**Por qué falta D1.** Se evaluaron nueve esquemas de desagregación de la serie regional EMAT y ninguno resultó válido: los ponderadores con dinámica turística real provienen del SII —la misma fuente de D2 y D3, con correlaciones de +0,54 a +0,83, lo que implicaría doble conteo—, y los independientes del índice carecen de contenido turístico. Se verificó además que la EMAT **sí contempla** apertura por destino turístico, pero la fuente declara que está **suspendida desde abril de 2020**. Detalle en [`Nota_metodologica_D1_desagregacion.md`](Documentación/Nota_metodologica_D1_desagregacion.md).
 
 ---
 
@@ -128,47 +136,79 @@ El ML supera netamente a los modelos lineales en **pronóstico temporal** — y 
 │   └── README.md             # estado y especificación de levantamiento de datos
 ├── src/
 │   ├── config.py             # catálogo comunal, definición del clúster, rutas
-│   ├── build_panel.py        # ensamblado reproducible del panel Nivel A
-│   ├── data/                 # loaders: sii, bip, poblacion, sernatur
-│   ├── features/             # diagnostics, inversion, idec
+│   ├── build_panel.py        # ensamblado reproducible del panel
+│   ├── data/                 # loaders: sii, bip, poblacion, sernatur, conaf
+│   ├── features/             # diagnostics, inversion, idec, cet
 │   └── models/               # supervisado (H1–H2), clustering (H3)
-├── Notebooks/                # exploración y transformaciones
-├── Documentación/            # protocolo, capítulos, tesis
+├── deploy_static/            # simulador publicado (HTML/JS autocontenido)
+├── deploy/                   # variante Gradio del simulador
+├── Notebooks/                # exploración inicial
+├── Documentación/            # capítulos, notas metodológicas y entrega
 ├── requirements.txt
 └── README.md
 ```
 
 Los datos crudos **no se versionan** (volumen y licencia). Viven en una carpeta externa apuntada por `src/config.py`; puede redefinirse con la variable de entorno `TESIS_BBDD_DIR`.
 
-### Reproducir el panel
+### Reproducir el análisis
 
 ```bash
 pip install -r requirements.txt
 python -m src.build_panel        # genera BBDD/final/panel_nivelA_comunal.csv
 ```
 
+### Regenerar y republicar el simulador
+
+```bash
+python -m deploy_static.generar_datos
+python deploy_static/publicar.py --publicar
+```
+
+---
+
+## Documentación
+
+| Documento | Contenido |
+|---|---|
+| [Entrega del componente de ML](Documentación/ENTREGA_a_German_Barra.md) | Resumen de resultados, decisiones a defender y pendientes |
+| [Capítulo III — Metodología](Documentación/Capitulo_III_Metodologia.md) | Diseño, fuentes, construcción del IDEC, validación |
+| [Capítulo IV — Resultados](Documentación/Capitulo_IV_Resultados.md) | Contraste de las tres hipótesis |
+| [Capítulo V — Conclusiones](Documentación/Capitulo_V_Conclusiones.md) | Objetivos, contribuciones, implicancias, líneas futuras |
+| [Nota metodológica D1](Documentación/Nota_metodologica_D1_desagregacion.md) | Los nueve esquemas de desagregación evaluados |
+| [Referencias metodológicas](Documentación/Referencias_metodologicas.md) | 29 referencias organizadas por método |
+
 ---
 
 ## Estado de avance
 
-| Componente | Avance |
+### Componente de Machine Learning — completo
+
+| Componente | Estado |
 |---|---|
-| Levantamiento de fuentes comunales (SII, BIP, INE, SERNATUR) | 100 % |
-| Panel comunal integrado 2013–2024 | 100 % |
-| Diagnóstico de validez del panel | 100 % |
-| IDEC (3 de 4 dimensiones) | 85 % |
-| Dimensión D1 — actividad turística (EMAT) | 0 % *(pendiente levantamiento)* |
-| Modelos supervisados (H1, H2) | 100 % |
-| Clustering y desigualdad territorial (H3) | 100 % |
-| Redacción Capítulos I–IV (integrados en la tesis) | 100 % |
-| Redacción Capítulo V (Conclusiones) | Pendiente *(placeholder en la tesis)* |
+| Levantamiento de fuentes comunales (SII, BIP, INE, SERNATUR, CONAF) | ✅ |
+| Panel comunal integrado 2013–2024 | ✅ |
+| Diagnóstico de validez del panel | ✅ |
+| IDEC — tres dimensiones observadas | ✅ |
+| Modelos supervisados (H1, H2) | ✅ |
+| Clustering y desigualdad territorial (H3) | ✅ |
+| Variable CET — choques exógenos territoriales | ✅ |
+| Redacción e integración de los Capítulos III, IV y V | ✅ |
+| Simulador desplegado | ✅ |
 
-### Pendientes de datos
+### Fuera del alcance de este componente
 
-Detallados en [`BBDD/README.md`](BBDD/README.md):
-1. **EMAT mensual/comunal** — habilita D1 y multiplica las observaciones temporales.
-2. **SERNATUR con fecha de inscripción** — convierte D4 en serie temporal.
-3. **Población comunal base Censo 2024** — el INE aún no la publica desagregada.
+Corresponden al autor de la tesis:
+
+| Componente | Estado |
+|---|---|
+| Capítulo II — Marco Teórico | Requiere desarrollo |
+| Capítulo I — El Problema | Requiere ampliación |
+| Verificación de las referencias en la fuente | Pendiente |
+| Anexos e índices de tablas y figuras | Pendientes |
+
+### Mejoras futuras del componente cuantitativo
+
+Ninguna bloqueante. El panel se actualiza de forma mecánica cuando el SII publique el año comercial 2025, previsiblemente a fines de 2026 —difunde con unos dieciocho meses de rezago—. Otras vías: pasos fronterizos (PDI) como señal turística adicional, SERNATUR con fecha de inscripción para dar dimensión temporal a D4, y población comunal base Censo 2024 cuando el INE la publique desagregada.
 
 ---
 
@@ -177,8 +217,9 @@ Detallados en [`BBDD/README.md`](BBDD/README.md):
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat&logo=python&logoColor=white)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-F7931E?style=flat&logo=scikit-learn&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-2.x-150458?style=flat&logo=pandas&logoColor=white)
+![Hugging Face](https://img.shields.io/badge/🤗_Hugging_Face-Spaces-FFD21E?style=flat)
 
-**Librerías principales:** `scikit-learn` · `pandas` · `numpy` · `scipy` · `statsmodels` · `pyxlsb` · `pyreadr`
+**Librerías principales:** `scikit-learn` · `pandas` · `numpy` · `scipy` · `pyxlsb` · `pyreadr`
 
 ---
 
