@@ -126,6 +126,28 @@ El ML supera netamente a los modelos lineales en **pronóstico temporal** — y 
 
 ---
 
+## Simulador interactivo
+
+**▶ [Abrir el simulador](https://huggingface.co/spaces/diegoevans2-arch/idec-araucania)** · alojado en Hugging Face Spaces
+
+### Simulador de escenarios
+
+![Simulador de escenarios del IDEC](Images/IDEC_01.png)
+
+Permite seleccionar comuna y año y ajustar la **variable CET** —Choques Exógenos Territoriales, con 1 como condiciones normales y 0 como choque máximo— junto con la elasticidad λ, para estimar el efecto sobre el desempeño del clúster.
+
+Dos decisiones de diseño visibles en la interfaz. La primera es el aviso permanente de que se trata de una herramienta de investigación y no de pronóstico. La segunda es el bloque **«Contraste con el modelo»**: el Random Forest comprime los valores extremos hacia la media —correlación entre IDEC y residuo de −0,79—, por lo que subestima a Pucón en torno a un 16 %; los escenarios se anclan por eso en el valor observado y la predicción se muestra únicamente como contraste.
+
+### Explorador del panel
+
+![Explorador del panel comunal](Images/IDEC_02.png)
+
+Muestra la evolución temporal por comuna, la comparación entre los trece territorios y el detalle con destino SERNATUR, intensidad de oferta, población y visitación a áreas protegidas.
+
+La serie de **Curacautín** deja ver el salto de 2021 que sostiene el hallazgo de convergencia: su IDEC crece 134 % en el período. La tabla también hace visible una limitación documentada del estudio — **Villarrica registra cero visitas a áreas protegidas** pese a ser la segunda comuna en oferta hotelera, razón por la cual la visitación de CONAF se emplea como variable explicativa y no como ponderador de desagregación.
+
+---
+
 ## Estructura del repositorio
 
 ```
