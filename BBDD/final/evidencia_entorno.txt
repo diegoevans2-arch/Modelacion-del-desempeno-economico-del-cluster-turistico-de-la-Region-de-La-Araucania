@@ -1,0 +1,49 @@
+EVIDENCIA DE ENTORNO Y EJECUCION
+======================================================================
+generado            2026-10-22T19:31:19
+commit              dee060a9098a
+python              3.12.7
+ejecutable          C:\Users\diego.perezp\AppData\Local\anaconda3\python.exe
+sistema             Windows-11-10.0.22631-SP0
+
+BIBLIOTECAS
+  scikit-learn      1.9.0
+  numpy             1.26.4
+  pandas            2.2.2
+  scipy             1.13.1
+
+CONFIGURACION DEL ESTIMADOR (src/models/supervisado.py, modelos())
+  RandomForestRegressor(n_estimators=500, min_samples_leaf=3,
+                        max_features='sqrt', random_state=42, n_jobs=-1)
+  los demas parametros quedan en su valor por defecto de scikit-learn:
+  max_depth=None, min_samples_split=2, bootstrap=True,
+  criterion='squared_error'
+  NO se ejecuto GridSearch ni RandomSearch.
+
+PREDICTORES (15)
+  inversion_pc_lag2
+  stock_capital_pc_lag1
+  ventas_uf_comercio_pc
+  ventas_uf_transporte_pc
+  ventas_uf_recreativas_pc
+  ventas_uf_inmobiliarias_pc
+  ventas_uf_construccion_pc
+  n_trabajadores_comercio_pc
+  n_trabajadores_transporte_pc
+  n_trabajadores_recreativas_pc
+  visitas_snaspe_pc
+  poblacion
+  poblacion_laboral
+  cet
+  anio
+
+OBJETIVO            IDEC
+OBSERVACIONES       152 utilizables de 156 del panel
+
+HASH SHA-256 (16 primeros caracteres) DE LOS ARCHIVOS CLAVE
+  892b0aa49d60e0a4  src/models/supervisado.py
+  e6bc1b2e0cc34ec6  src/models/clustering.py
+  1b9da29f414336b5  src/features/idec.py
+  f40a45bf3487ec17  src/config.py
+  c96b22d63ae519dd  BBDD/final/panel_idec_comunal.csv
+  47a0d220426f4864  BBDD/final/panel_nivelA_comunal.csv

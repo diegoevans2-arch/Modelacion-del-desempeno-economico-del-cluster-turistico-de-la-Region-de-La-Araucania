@@ -1,0 +1,21 @@
+esquema,modelo,n_test,R2_agrupado,R2_medio_pliegues,desv_R2_pliegues,MAE,RMSE
+aleatorio,Media (base),152,-0.0109,-0.0408,0.0473,0.1395,0.2049
+aleatorio,Regresión lineal,152,0.5557,0.5374,0.0734,0.1002,0.1359
+aleatorio,Ridge (regularizada),152,0.4828,0.4706,0.2434,0.0991,0.1466
+aleatorio,Árbol de decisión,152,0.5501,0.6101,0.3301,0.0716,0.1367
+aleatorio,Random Forest,152,0.7989,0.8001,0.0865,0.0582,0.0914
+bloques,Media (base),152,-0.0087,-0.0254,0.0247,0.14,0.2047
+bloques,Regresión lineal,152,0.5247,0.4917,0.2718,0.1017,0.1405
+bloques,Ridge (regularizada),152,0.3152,0.3496,0.3813,0.1077,0.1687
+bloques,Árbol de decisión,152,0.5641,0.5847,0.4475,0.0691,0.1346
+bloques,Random Forest,152,0.7621,0.7877,0.1467,0.0651,0.0994
+temporal,Media (base),65,-0.0222,-0.0348,0.0218,0.1272,0.1854
+temporal,Regresión lineal,65,0.0508,0.0329,0.4751,0.1276,0.1786
+temporal,Ridge (regularizada),65,0.2432,0.2208,0.4374,0.1172,0.1595
+temporal,Árbol de decisión,65,0.3338,0.3073,0.713,0.0742,0.1497
+temporal,Random Forest,65,0.8087,0.8068,0.0289,0.0585,0.0802
+comuna,Media (base),152,-0.2845,-18.6161,34.2568,0.1624,0.231
+comuna,Regresión lineal,152,-11.8596,-272.4851,408.5074,0.3793,0.7309
+comuna,Ridge (regularizada),152,-2.9346,-65.0902,88.039,0.2271,0.4043
+comuna,Árbol de decisión,152,-1.3544,-23.1095,42.8843,0.1998,0.3128
+comuna,Random Forest,152,-0.3619,-18.677,26.3592,0.1699,0.2379
