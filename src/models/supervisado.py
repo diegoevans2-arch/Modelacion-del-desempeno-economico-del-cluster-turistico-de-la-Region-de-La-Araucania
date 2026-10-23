@@ -201,6 +201,26 @@ def importancia_variables(df, predictores=None, objetivo=OBJETIVO,
     por comuna el modelo tiene R² negativo, y permutar variables de un modelo
     que ya predice peor que la media no informa sobre relevancia. La
     importancia sólo es interpretable donde el modelo efectivamente predice.
+
+    Los dos `n_jobs` están fijados a propósito: NO devolver ninguno a -1.
+    Cada pliegue hace `n_predictores × n_repeticiones` llamadas a `predict()`
+    (15 × 30 = 450) sobre conjuntos de prueba de decenas de filas, de modo
+    que cualquier nivel de joblib cuesta más en arrancar procesos —en Windows
+    el arranque es por spawn— que lo que tarda el cálculo. Medido sobre este
+    panel con `esquema="bloques"` y `n_repeticiones=30`: ambos en -1, 277 s;
+    sólo el bosque en 1, 155 s; los dos como están ahora, 74 s. Volver a -1
+    además inunda stderr con `UserWarning` de joblib, miles de líneas por
+    corrida.
+
+    Hay una segunda razón, menos visible. Con `n_jobs=-1` el `predict()` del
+    bosque suma los 500 árboles bajo un lock, en el orden en que los hilos lo
+    van ganando, y la suma de flotantes no es asociativa: los últimos dígitos
+    de la tabla cambian de una corrida a otra. Así, el CSV de
+    `BBDD/final/resultados_h1_importancia.csv` no es exactamente reproducible
+    ni por el código que lo generó. Con `n_jobs=1` la función es reproducible
+    bit a bit. El `n_jobs` de `permutation_importance`, en cambio, sí es
+    numéricamente neutro —sortea una sola semilla y la reparte a todas las
+    tareas—, y está en `None` nada más que por tiempo.
     """
     from sklearn.inspection import permutation_importance
 
@@ -214,13 +234,15 @@ def importancia_variables(df, predictores=None, objetivo=OBJETIVO,
     acum = {p: [] for p in predictores}
     r2_folds = []
     for tr, te in particiones(d, esquema, n_splits=n_splits):
+        # n_jobs fijado a propósito; leer la nota del docstring antes de tocarlo.
         m = RandomForestRegressor(
             n_estimators=500, min_samples_leaf=3, max_features="sqrt",
-            random_state=42, n_jobs=-1
+            random_state=42, n_jobs=1
         ).fit(X[tr], y[tr])
         r2_folds.append(r2_score(y[te], m.predict(X[te])))
         r = permutation_importance(
-            m, X[te], y[te], n_repeats=n_repeticiones, random_state=42, n_jobs=-1
+            m, X[te], y[te], n_repeats=n_repeticiones, random_state=42,
+            n_jobs=None
         )
         for i, p in enumerate(predictores):
             acum[p].append(r.importances_mean[i])
