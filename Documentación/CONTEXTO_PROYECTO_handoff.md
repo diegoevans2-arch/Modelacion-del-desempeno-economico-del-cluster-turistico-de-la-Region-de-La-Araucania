@@ -285,6 +285,7 @@ Estos puntos **no fueron abordados** en este trabajo y quedan pendientes:
 - `Documentación/Capitulo_III_Metodologia.md` y `Capitulo_IV_Resultados.md` — borradores fuente en Markdown (origen de lo integrado al `.docx`).
 - `BBDD/README.md` — especificación de levantamiento de datos pendientes.
 - `Documentación/documentacion_2026-05-26_protocolo-investigacion-barra.md` — protocolo original.
+- `Documentación/Nota_tecnica_paralelismo_importancia_variables.md` — por qué los dos `n_jobs` de `importancia_variables()` están fijados: paralelismo anidado, 3,7× de tiempo y reproducibilidad bit a bit.
 
 ---
 
@@ -293,5 +294,6 @@ Estos puntos **no fueron abordados** en este trabajo y quedan pendientes:
 - **No re-litigar** la decisión de no desagregar por pesos fijos (§2). Está demostrado numéricamente.
 - **Control de circularidad:** los predictores de H1/H2 NO pueden incluir componentes del IDEC (`supervisado.py` aborta si ocurre).
 - **Validación de panel:** nunca usar K-fold aleatorio como resultado principal (fuga temporal). Usar temporal/bloques/comuna.
+- **Rendimiento de H1:** los dos `n_jobs` de `importancia_variables()` están fijados a propósito. Devolver cualquiera a `-1` cuadruplica el tiempo y vuelve la tabla no reproducible (ver la nota técnica).
 - **Entorno:** Python 3.12 (Anaconda), Windows. `.xlsb` requiere `pyxlsb`; el CSV del INE es **latin-1**; el BIP se lee **por chunks** (1.2 GB).
 - Si se agrega D1, recalcular IDEC, sensibilidad y las tres hipótesis: los números de §7 cambiarán.
