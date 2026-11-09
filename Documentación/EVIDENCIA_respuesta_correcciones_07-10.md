@@ -514,10 +514,23 @@ En `BBDD/final/`:
 
 El código está en `src/`. El panel se regenera con `python -m src.build_panel`.
 
-**Nota de reproducción**: `importancia_variables()` tarda unos nueve minutos en
-Windows por paralelismo anidado entre el bosque y la permutación. Fijar
-`n_jobs=1` en cualquiera de los dos lo reduce a unos dos minutos y **no altera
-los resultados** —con `random_state = 42` la permutación es determinista—.
+**Nota de reproducción**: `importancia_variables()` sufría paralelismo anidado
+entre el bosque y la permutación, lo que en Windows la hacía tardar varios
+minutos. Ya está corregido en `src/models/supervisado.py`, con los dos `n_jobs`
+fijados a propósito; la medición sobre este panel es de 277 s con ambos en −1
+frente a 74 s con la configuración actual.
+
+Importa una precisión sobre esa corrección, porque yo la había enunciado de
+forma demasiado fuerte. El `n_jobs` de `permutation_importance` **sí** es
+numéricamente neutro: sortea una sola semilla y la reparte entre las tareas. El
+del bosque **no lo es del todo**: con `n_jobs=-1`, `predict()` acumula los 500
+árboles bajo un lock en el orden en que los hilos lo van ganando, y la suma de
+punto flotante no es asociativa, de modo que los últimos dígitos varían entre
+corridas. Las cifras que este documento reporta —tres y cuatro decimales— no se
+ven afectadas, pero la afirmación correcta es que con `n_jobs=1` la función pasa
+a ser reproducible bit a bit, no que el reparto fuera indiferente.
+
+El detalle está en `Documentación/Nota_tecnica_paralelismo_importancia_variables.md`.
 
 ---
 

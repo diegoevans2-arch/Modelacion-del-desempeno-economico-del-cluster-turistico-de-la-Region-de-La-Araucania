@@ -1,7 +1,7 @@
 EVIDENCIA DE ENTORNO Y EJECUCION
 ======================================================================
-generado            2026-10-22T19:31:19
-commit              dee060a9098a
+generado            2026-11-09T16:49:41
+commit              4a87cd071f82
 python              3.12.7
 ejecutable          C:\Users\diego.perezp\AppData\Local\anaconda3\python.exe
 sistema             Windows-11-10.0.22631-SP0
@@ -41,7 +41,7 @@ OBJETIVO            IDEC
 OBSERVACIONES       152 utilizables de 156 del panel
 
 HASH SHA-256 (16 primeros caracteres) DE LOS ARCHIVOS CLAVE
-  892b0aa49d60e0a4  src/models/supervisado.py
+  7826808b33a57c62  src/models/supervisado.py
   e6bc1b2e0cc34ec6  src/models/clustering.py
   1b9da29f414336b5  src/features/idec.py
   f40a45bf3487ec17  src/config.py
