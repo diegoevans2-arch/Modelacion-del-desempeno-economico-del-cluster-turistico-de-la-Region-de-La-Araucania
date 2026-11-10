@@ -1,0 +1,35 @@
+# Versiones exactas del entorno con que se generaron los resultados que
+# reporta la tesis. Para reproducir las cifras hay que usar estas.
+#
+# requirements.txt declara rangos (>=) y no garantiza reproducibilidad:
+# scikit-learn cambia implementaciones internas entre versiones menores, de
+# modo que un entorno instalado con rangos puede devolver metricas distintas
+# con la misma semilla.
+#
+# Python 3.12.7
+# Verificado el 2026-11-09 contra el entorno de ejecucion efectivo.
+#
+#   python -m venv .venv
+#   .venv\Scripts\pip install -r requirements-lock.txt
+#   python -m src.build_panel
+
+pandas==2.2.2
+numpy==1.26.4
+scipy==1.13.1
+scikit-learn==1.9.0
+
+# Lectura de las fuentes oficiales. El SII publica en .xlsb y se lee con
+# pyxlsb; no se requiere ningun otro motor de Excel.
+openpyxl==3.1.5
+pyxlsb==1.0.10
+
+# Auxiliares de analisis y figuras
+statsmodels==0.14.2
+matplotlib==3.10.8
+seaborn==0.13.2
+jupyter==1.0.0
+
+# Nota sobre requirements.txt: declara ademas xlrd y pyreadr. Ninguno de los
+# dos esta instalado en el entorno que produjo los resultados y ninguno se
+# importa en src/ (la unica lectura de Excel usa engine="pyxlsb"). Son
+# entradas obsoletas y pueden retirarse de requirements.txt.

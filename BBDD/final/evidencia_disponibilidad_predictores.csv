@@ -1,0 +1,16 @@
+variable,desde,hasta,n_observado,n_nulos,cobertura_pct
+inversion_pc_lag2,2013,2024,156,0,100.0
+stock_capital_pc_lag1,2013,2024,156,0,100.0
+ventas_uf_comercio_pc,2013,2024,156,0,100.0
+ventas_uf_transporte_pc,2013,2024,156,0,100.0
+ventas_uf_recreativas_pc,2013,2024,152,4,97.4
+ventas_uf_inmobiliarias_pc,2013,2024,155,1,99.4
+ventas_uf_construccion_pc,2013,2024,156,0,100.0
+n_trabajadores_comercio_pc,2013,2024,156,0,100.0
+n_trabajadores_transporte_pc,2013,2024,156,0,100.0
+n_trabajadores_recreativas_pc,2013,2024,152,4,97.4
+visitas_snaspe_pc,2013,2024,156,0,100.0
+poblacion,2013,2024,156,0,100.0
+poblacion_laboral,2013,2024,156,0,100.0
+cet,2013,2024,156,0,100.0
+anio,2013,2024,156,0,100.0
