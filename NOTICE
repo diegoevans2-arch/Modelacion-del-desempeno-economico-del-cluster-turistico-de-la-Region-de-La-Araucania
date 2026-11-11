@@ -1,0 +1,35 @@
+AVISO SOBRE EL ALCANCE DE LA LICENCIA
+====================================
+
+El archivo LICENSE (MIT) cubre únicamente el SOFTWARE de este repositorio: los
+cuadernos de `Notebooks/`, el código de `deploy/` y la construcción del panel
+comunal y del modelo IDEC.
+
+    Copyright (c) 2026 Diego Evans Pérez Paz
+
+
+NO quedan cubiertos por la licencia MIT
+---------------------------------------
+
+1. El manuscrito de la tesis doctoral, sus capítulos y los documentos de
+   evaluación, en cualquier version o formato:
+
+       Documentación/Tesis_Doctoral_*
+       Documentación/Capitulo_*
+       Documentación/Revisar/*
+
+   Son obra de Germán Patricio Barra Ávila y de su comité evaluador (TECH
+   Universidad Tecnológica). Se incluyen aquí con autorización del autor y
+   conservan TODOS LOS DERECHOS RESERVADOS. No se otorga permiso para
+   reproducirlos, modificarlos, traducirlos ni redistribuirlos.
+
+2. Los datos de `BBDD/`, derivados de registros administrativos públicos del
+   SII, BIP, INE, SERNATUR y CONAF. Se rigen por los términos de uso de cada
+   organismo de origen.
+
+
+Cita
+----
+
+El trabajo de investigación se cita a nombre de su autor. Ver la sección
+"Cita" del README.
