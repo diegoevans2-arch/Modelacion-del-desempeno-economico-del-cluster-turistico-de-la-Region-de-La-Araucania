@@ -266,6 +266,16 @@ Este estudio utiliza **exclusivamente datos públicos** sin información persona
 }
 ```
 
+## Licencia
+
+El **código** de este repositorio (`Notebooks/`, `deploy/`) se publica bajo licencia [MIT](LICENSE), © 2026 Diego Evans Pérez Paz.
+
+El **manuscrito de la tesis, sus capítulos y los documentos de evaluación** (`Documentación/`) son obra de Germán Patricio Barra Ávila y de su comité evaluador, se incluyen con autorización del autor y conservan todos los derechos reservados. Los **datos** de `BBDD/` se rigen por los términos de uso de sus organismos de origen.
+
+Ver [NOTICE](NOTICE) para el detalle.
+
+---
+
 ---
 
 <p align="center">
